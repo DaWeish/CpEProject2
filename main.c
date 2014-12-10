@@ -138,7 +138,7 @@ void main()
 	}
 
 
-	switch(mode)
+/*	switch(mode)
 	{
 		case 0:
 		
@@ -186,7 +186,7 @@ void main()
 		default:
 			mode = 0;
 	}
-
+*/
 	
 }
 
