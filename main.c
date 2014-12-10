@@ -26,6 +26,7 @@ unsigned int note_durr_factor;
 
 sbit speaker = P1^7;
 
+
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
 
@@ -43,6 +44,7 @@ void timer1_tone(void) interrupt 3 using 3
 	TH1 = notes[note_ptr[currNote]] >> 8;
 	TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	speaker = ~speaker;
+
 }
 	
 void timer0_durr(void) interrupt 1 using 3 
@@ -79,15 +81,25 @@ void timer0_durr(void) interrupt 1 using 3
 
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
 
+sbit light = P0^6;
 void main()
 {
-
+	P0M1 = 0x00;
+	P0M2 = 0x00;
+	P1M1 = 0x00;
+	P1M2 = 0x00;
+	light = 0;
 	tempo = 60;
 	note_durr_factor  = (60*10000)/(32*tempo);
 	
-	uart_init();
-	
+//	uart_init();
+	  
 	playSong(song1, durr1, song1Size, 1);
+
+	while (1)
+	{
+		
+	}
 
 /*	switch(mode)
 	{

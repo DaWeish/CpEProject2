@@ -1,0 +1,1615 @@
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 1   
+
+
+C51 COMPILER V6.02, COMPILATION OF MODULE JOELJECT
+OBJECT MODULE PLACED IN .\joelject.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\joelject.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <REG932.H>
+   2          #include <stdlib.h>
+   3          
+   4          sbit RED1=P2^4;			     	 	// LED (TOP LEFT)
+   5          sbit AMBER1=P0^6;			 		// LED (LEFT MIDDLE)
+   6          sbit YELLOW1=P2^5;		     		// LED (BOTTOM LEFT)
+   7          sbit YELLOW2=P0^5;		      		// LED (TOP CENTER)
+   8          sbit BLUE=P1^6;			      		// LED (MIDDLE)
+   9          sbit GREEN1=P0^7;			  		// LED (BOTTOM CENTER)
+  10          sbit GREEN2=P2^7;			  		// LED (TOP RIGHT)
+  11          sbit RED2=P0^4;		     	  		// LED (RIGHT MIDDLE)
+  12          sbit AMBER2=P2^6;			  		// LED (BOTTOM RIGHT)
+  13          sbit SPEAKER= P1^7;			  		// SPEAKER
+  14          sbit SW1 = P2^0;
+  15          sbit SW2 = P0^2;
+  16          sbit SW3 = P2^1;
+  17          sbit SW4 = P0^1;
+  18          sbit SW5 = P1^4;
+  19          sbit SW6 = P0^3;
+  20          sbit SW7 = P2^3;
+  21          sbit SW8 = P0^0;
+  22          sbit SW9 = P2^2;
+  23          
+  24          /////////////////////////////FUNCTION PROTOTYPES///////////////////////////////
+  25          
+  26          /////////////////////////////////////////////DELAY/////////////////////////////////////////////////////
+  27          //                                 THIS FUNCTION CREATES A DELAY          			                 //
+  28          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  29          void durlay(unsigned char x);
+  30          
+  31          ///////////////////////////////////////PLAY A C6 NOTE//////////////////////////////////////////////////
+  32          //                 THIS FUNCTION MAKES THE SPEAKER PLAY A C NOTE IN THE 6TH OCTAVE					 //
+  33          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  34          void playC6(char durC);
+  35          
+  36          ///////////////////////////////////////PLAY A D6 NOTE//////////////////////////////////////////////////
+  37          //                 THIS FUNCTION MAKES THE SPEAKER PLAY A D NOTE IN THE 6TH OCTAVE					 //
+  38          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  39          void playD6(char durD);
+  40          
+  41          ///////////////////////////////////////PLAY AN F6 NOTE/////////////////////////////////////////////////
+  42          //                 THIS FUNCTION MAKES THE SPEAKER PLAY AN F NOTE IN THE 6TH OCTAVE					 //
+  43          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  44          void playF6(char durD);
+  45          
+  46          ///////////////////////////////////////PLAY A G6 NOTE//////////////////////////////////////////////////
+  47          //                 THIS FUNCTION MAKES THE SPEAKER PLAY A G NOTE IN THE 6TH OCTAVE					 //
+  48          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  49          void playG6(char durD);
+  50          
+  51          ///////////////////////////////////////PLAY AN A6 NOTE/////////////////////////////////////////////////
+  52          //                 THIS FUNCTION MAKES THE SPEAKER PLAY AN A NOTE IN THE 6TH OCTAVE					 //
+  53          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  54          void playA6(char durD);
+  55          
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 2   
+
+  56          ///////////////////////////////////////PLAY AN E6 NOTE/////////////////////////////////////////////////
+  57          //                 THIS FUNCTION MAKES THE SPEAKER PLAY AN E NOTE IN THE 6TH OCTAVE					 //
+  58          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  59          void playE6(char durD);
+  60          
+  61          /////////////////////////////////////////////PAUSE/////////////////////////////////////////////////////
+  62          //                            THIS FUNCTION MAKES A PAUSE BETWEEN NOTES			                     //
+  63          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  64          void playBreath(char durD);
+  65          
+  66          ////////////////////////////////////////////STOP TIMER/////////////////////////////////////////////////
+  67          //                    THIS FUNCTION STOPS THE TIMER AFTER MUSIC IS DONE PLAYING		        		 //
+  68          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  69          void playREST();
+  70          
+  71          ///////////////////////////////TWINKILE TWINKLE LITTLE STAR////////////////////////////////////////////
+  72          //                 THIS FUNCTION PLAYS A SERIES OF NOTES THAT CREATE A SONG							 //
+  73          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  74          void playSong();
+  75          
+  76          ///////////////////////////////////////TURN ON ALL THE LIGHTS//////////////////////////////////////////
+  77          //                 THIS FUNCTION TURNS ON ALL OF THE ACTIVE-LOW LIGHTS							     //
+  78          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  79          void allon();                 //turns all LEDs on
+  80          
+  81          ///////////////////////////////////////TURN OFF ALL THE LIGHTS/////////////////////////////////////////
+  82          //                 THIS FUNCTION TURNS OFF ALL OF THE ACTIVE-LOW LIGHTS							     //
+  83          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  84          void alloff();                //turns all LEDs off
+  85          
+  86          /////////////////////////////////////////////DURATION//////////////////////////////////////////////////
+  87          //               	THIS FUNCTION CREATES A DURATION FOR THE NOTE TO BE PLAYED                       //  ///
+             -///////////////////GET CALCULATIONS OUT OF BOOK////////////////
+  88          ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  89          void sixteenth(int mulofsixteenth);
+  90          
+  91          ///////////////////////////////////////////////////////////////////////////////
+  92          /////////////////////////////GAME ONE//////////////////////////////////////////
+  93          ///////////////////////////////////////////////////////////////////////////////
+  94          //DESCRIPTION: Function that generates a random number between 0 and 10, and
+  95          //			   stores this number in variable "randnum". The function then
+  96          //			   waits for a button press from the user. Button/Switch 7 is
+  97          //             pressed to increment the user's guess, which is stored in
+  98          //             "guessnum", as they are attempting to match their guess with the
+  99          //             random number in randnum. As their guess increments, LEDs light,
+ 100          //             in order, to visualize the count increasing. The function also
+ 101          //             waits for a Button/Switch 5 press, which then maintains
+ 102          //             conditional loops, and calls a function to compare the guess
+ 103          //             with the random number. If the user correctly guess the random
+ 104          //             number, the Switch 5 loop throws an exit flag to signal success.
+ 105          //             The user has a total of three possible attempts to guess the
+ 106          //             correct number.
+ 107          //PRE: Must be called by the user on a button press.
+ 108          //POST: A problem is output to the screen and a prompt for input.
+ 109          //      User input is compared to the correct answer and an exit flag is thrown
+ 110          //      if the user correctly guesses the number. Also, a function is called to
+ 111          //      evaluate the correctness of the user's guess.
+ 112          void game1();
+ 113          
+ 114          ///////////////////////////////////////////////////////////////////////////////
+ 115          /////////////////////////////GAME TWO//////////////////////////////////////////
+ 116          ///////////////////////////////////////////////////////////////////////////////
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 3   
+
+ 117          //DESCRIPTION: Function that randomizes a switch out of 9 total switched, and
+ 118          //			   waits for a button press from the user. Ifthe right button is pressed
+ 119          //			   all of the lights flash. Otherwise, the correct button flashes.
+ 120          //             The user only has one attempt.
+ 121          //PRE: Must be called by the user on a button press.
+ 122          //POST: A problem is output to the screen and a prompt for input.
+ 123          //      User input is compared to the correct answer and an exit flag is thrown
+ 124          void game2();
+ 125          
+ 126          ///////////////////////////////////////////////////////////////////////////////
+ 127          /////////////////////////////GAME THREE////////////////////////////////////////
+ 128          ///////////////////////////////////////////////////////////////////////////////
+ 129          //DESCRIPTION: Function that generates a random number between 0 and 1, and
+ 130          //			   stores this number in variable "map". If value in "map" is 0, 
+ 131          //			   the function operates in the map 0 layout, if the value in "map"
+ 132          //			   is 1, the function operates in map 1 layout.	Each map layout
+ 133          //			   have a starting point, an exit, and a "bomb" waiting to be
+ 134          //			   stepped on. For this project, the starting point and exit will
+ 135          //			   always be the same, while the bomb will change places depending
+ 136          //			   on map layout. When the game starts, one of the LED(Bottom Right)
+ 137          //             will light up indicating that is the starting point of the user.
+ 138          //			   The function then waits for a button press from the user. At
+ 139          //			   every point on the "map", there is only a few moves that is
+ 140          //			   available for the user to make, which are only adjacent buttons
+ 141          //			   but not diagonal ones. This means the user cannot jump all over
+ 142          //			   the map. Once the user make a move (by pressing any of the
+ 143          //			   adjacent buttons from the starting point), the LED from that
+ 144          //		       switch will light up while turning off all other previous ones.
+ 145          //			   Each time the user make a move, a value will be stored in a
+ 146          //			   variable "current" to indicate the user is currently at that 
+ 147          //			   point on the map. And while the user is at whichever current
+ 148          //			   point on the map, the user can only move to adjacent points.
+ 149          //			   If the user "step" on the bomb, then the game make a loud buzz
+ 150          //			   indicating the bomb has been set off (we all know what happens
+ 151          //			   when you step on a landmine). Afterwards, the game sends the
+ 152          //			   user back to game menu. However if the user does found the exit
+ 153          //			   without ever stepping on the bomb, then the game will play
+ 154          //			   a happy sound indicating the exit have been found and the user
+ 155          //			   successfully found the correct pathing. Afterwards, the game
+ 156          //			   sends the user back to game menu and can choose the next game.
+ 157          //			   NOTE: Since we ran out of space, we have to limit the game to
+ 158          //			   only one map layout instead of 2 or 3, or more. 
+ 159          void game3();
+ 160          
+ 161          ///////////////////////////////////////////////////////////////////////////////
+ 162          /////////////////////////////GAME ONE COMPARE//////////////////////////////////
+ 163          ///////////////////////////////////////////////////////////////////////////////
+ 164          //DESCRIPTION: Function that compares the user's guess, and the random number.
+ 165          //             If the guess is correct, all lights flash, and the winning tune
+ 166          //             sounds a number of times equal to the random number. If the
+ 167          //             user's guess is greater than the random number, a high note will
+ 168          //             play, and an H will appear in LEDs on the board, signaling the
+ 169          //             guess was too high. If the user's guess is less than  the random
+ 170          //             number, a low note will play, and an L will appear on the
+ 171          //             on-board LEDs, signaling the guess was too low. 
+ 172          //PRE: Must be passed two characters, one representing the random number value
+ 173          //     "r", and one for the guess "g". This is to only be called in game1().
+ 174          //POST: User input "g" is compared to the correct answer "r" and outcome 
+ 175          //      specific actions, descibed above, are carried out.
+ 176          void g1compare(char r, char g);
+ 177          
+ 178          void buzz();
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 4   
+
+ 179          
+ 180          void buzzwin();
+ 181          
+ 182          //////////////////////////////////CONSTANTS////////////////////////////////////
+ 183          unsigned char R0,R1,R2,R3,R4;
+ 184          char randnum, guessnum, attempts, win,current;
+ 185          bit donesig = 0;              // SIGNALS WHEN GUESS IS MADE IN GAME 1
+ 186          bit exit = 0;                 // USED TO EXIT LOOP IN GAME 1 ON CORRECT GUESS
+ 187          
+ 188          void T_ISR(void) interrupt 1
+ 189          {
+ 190   1       	SPEAKER=!SPEAKER;
+ 191   1       	TH0=R3;
+ 192   1      	TL0=R4;
+ 193   1       	return;
+ 194   1      }
+ 195          
+ 196          void T1_ISR(void) interrupt 3
+ 197          {
+ 198   1       	TF1 = 0;
+ 199   1       	return;
+ 200   1      }
+ 201          
+ 202          void main()
+ 203          {
+ 204   1      	srand(NULL);
+ 205   1      	P0M1=0x00;
+ 206   1       	P1M1=0x00;
+ 207   1      	P2M1=0x00;
+ 208   1       	TMOD=0x11;
+ 209   1       	ET1 = 1;
+ 210   1      	ET0=1;
+ 211   1      	EA=1;
+ 212   1      	TR0=1;
+ 213   1      	playSong();					
+ 214   1      	while(1)					//GAME MENU STARTS HERE, AFTER SONG
+ 215   1      	{
+ 216   2      		allon();
+ 217   2      
+ 218   2      		if(SW7 == 0)                                                                                
+ 219   2      		{   
+ 220   3      			do                                                                                         
+ 221   3      			{
+ 222   4      				durlay(20);             //debounce delay                                                 
+ 223   4      			}while(SW7 == 0);  
+ 224   3      
+ 225   3      			alloff();
+ 226   3      			game1();                                                                                   
+ 227   3      		}                                                                                            
+ 228   2      
+ 229   2      		if(SW8 == 0)                                                                                
+ 230   2      		{                                                                                            
+ 231   3      			do                                                                                         
+ 232   3      			{                                                                                          
+ 233   4      				durlay(20);             //debounce delay                                                 
+ 234   4      			}while(SW8 == 0);                                                                         
+ 235   3      			alloff();
+ 236   3      			game2();
+ 237   3      		}
+ 238   2      
+ 239   2      		if(SW9 == 0)
+ 240   2      		{
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 5   
+
+ 241   3      			do
+ 242   3      			{
+ 243   4      				durlay(20);             //debounce delay
+ 244   4      			}while(SW9 == 0);
+ 245   3      			alloff();
+ 246   3      			game3();
+ 247   3      		}
+ 248   2      
+ 249   2      		alloff();
+ 250   2      	}
+ 251   1      
+ 252   1      }
+ 253          
+ 254          
+ 255          void playSong()  //Notes Used: C, G, F, A, D, E
+ 256          {
+ 257   1      	playC6(50);
+ 258   1      	playBreath(20);			//This function creates a pause between notes
+ 259   1      	playC6(50);
+ 260   1      	playBreath(20);
+ 261   1      	playG6(50);
+ 262   1      	playBreath(20);
+ 263   1      	playG6(50);
+ 264   1      	playBreath(20);
+ 265   1      	playA6(50);
+ 266   1      	playBreath(20);
+ 267   1      	playA6(50);
+ 268   1      	playBreath(20);
+ 269   1      	playG6(50);
+ 270   1      	playBreath(35);		    //Longer pause here
+ 271   1      	playF6(50);
+ 272   1      	playBreath(20);
+ 273   1      	playF6(50);
+ 274   1      	playBreath(20);
+ 275   1      	playE6(50);
+ 276   1      	playBreath(20);
+ 277   1      	playE6(50);
+ 278   1      	playBreath(20);
+ 279   1      	playD6(50);
+ 280   1      	playBreath(20);
+ 281   1      	playD6(50);
+ 282   1      	playBreath(20);
+ 283   1      	playC6(50);
+ 284   1      	playBreath(35);			//Longer pause here
+ 285   1      	playG6(50);
+ 286   1      	playBreath(20);
+ 287   1      	playG6(50);
+ 288   1      	playBreath(20);
+ 289   1      	playF6(50);
+ 290   1      	playBreath(20);
+ 291   1      	playF6(50);
+ 292   1      	playBreath(20);
+ 293   1      	playE6(50);
+ 294   1      	playBreath(20);
+ 295   1      	playE6(50);
+ 296   1      	playBreath(20);
+ 297   1      	playD6(50);
+ 298   1      	playBreath(35);			//Longer pause here
+ 299   1      	playG6(50);
+ 300   1      	playBreath(20);
+ 301   1      	playG6(50);
+ 302   1      	playBreath(20);
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 6   
+
+ 303   1      	playF6(50);
+ 304   1      	playBreath(20);
+ 305   1      	playF6(50);
+ 306   1      	playBreath(20);
+ 307   1      	playE6(50);
+ 308   1      	playBreath(20);	
+ 309   1      	playE6(50);
+ 310   1      	playBreath(20);
+ 311   1      	playD6(50);
+ 312   1      	/*playBreath(35);			//Longer pause here
+ 313   1      	playC6(50);
+ 314   1      	playBreath(20);
+ 315   1      	playC6(50);
+ 316   1      	playBreath(20);
+ 317   1      	playG6(50);
+ 318   1      	playBreath(20);
+ 319   1      	playG6(50);
+ 320   1      	playBreath(20);
+ 321   1      	playA6(50);
+ 322   1      	playBreath(20);
+ 323   1      	playA6(50);
+ 324   1      	playBreath(20);
+ 325   1      	playG6(50);
+ 326   1      	playBreath(35);			//Longer pause here
+ 327   1      	playF6(50);
+ 328   1      	playBreath(20);
+ 329   1      	playF6(50);
+ 330   1      	playBreath(20);
+ 331   1      	playE6(50);
+ 332   1      	playBreath(20);
+ 333   1      	playE6(50);
+ 334   1      	playBreath(20);
+ 335   1      	playD6(50);
+ 336   1      	playBreath(20);
+ 337   1      	playD6(50);
+ 338   1      	playBreath(20);
+ 339   1      	playC6(50);*/
+ 340   1          playREST();				 //Turns off the timer
+ 341   1      	SPEAKER=1;				 //Turns off speaker
+ 342   1      }
+ 343          
+ 344          void allon()				 //Function turn all LEDS on
+ 345          {
+ 346   1      		RED1 = 0;
+ 347   1      		AMBER1 = 0;
+ 348   1      		YELLOW1 = 0;
+ 349   1      		YELLOW2 = 0;
+ 350   1      		BLUE = 0;
+ 351   1      		GREEN1 = 0;
+ 352   1      		GREEN2 = 0;
+ 353   1      		RED2 = 0;
+ 354   1      		AMBER2 = 0;
+ 355   1      }
+ 356          
+ 357          void alloff()				//Function turn all LEDS off
+ 358          {
+ 359   1      		RED1 = 1;
+ 360   1      		AMBER1 = 1;
+ 361   1      		YELLOW1 = 1;
+ 362   1      		YELLOW2 = 1;
+ 363   1      		BLUE = 1;
+ 364   1      		GREEN1 = 1;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 7   
+
+ 365   1      		GREEN2 = 1;
+ 366   1      		RED2 = 1;
+ 367   1      		AMBER2 = 1;
+ 368   1      }
+ 369          
+ 370          void playC6(char durC)
+ 371          {
+ 372   1       	RED1=0;				//RED1 is assigned to the C note (LIGHT IS ON)
+ 373   1      	R3=0xF2;
+ 374   1      	R4=0x3D;
+ 375   1      	sixteenth(durC);	//Creates the duration of the note	
+ 376   1       	RED1=1;				//LIGHT IS OFF
+ 377   1       	return;
+ 378   1      }
+ 379          
+ 380          void playD6(char durD)
+ 381          {
+ 382   1      	AMBER1=0;			//AMBER1 is assigned to the D note (LIGHT IS ON)
+ 383   1       	R3=0xF3;
+ 384   1       	R4=0xBE;
+ 385   1       	sixteenth(durD);	//Creates the duration of the note
+ 386   1      	AMBER1=1;			//LIGHT IS OFF
+ 387   1      	return;
+ 388   1      }
+ 389          
+ 390          void playF6(char durD)
+ 391          {
+ 392   1      	BLUE=0;				//BLUE is assigned to the F note (LIGHT IS ON)
+ 393   1       	R3=0xF5;
+ 394   1       	R4=0xB1;
+ 395   1       	sixteenth(durD);	//Creates the duration of the note
+ 396   1      	BLUE=1;				//LIGHT IS OFF
+ 397   1      	return;
+ 398   1      }
+ 399          
+ 400          void playG6(char durD) 
+ 401          {
+ 402   1      	GREEN1=0;			//GREEN1 is assigned to the G note (LIGHT IS ON)
+ 403   1       	R3=0xF6;
+ 404   1       	R4=0xD1;
+ 405   1       	sixteenth(durD);	//Creates the duration of the note
+ 406   1      	GREEN1=1;			//LIGHT IS OFF
+ 407   1      	return;
+ 408   1      }
+ 409          
+ 410          void playA6(char durD)
+ 411          {
+ 412   1      	YELLOW1=0;			//YELLOW1 is assigned to the A note (LIGHT IS ON)
+ 413   1       	R3=0xF7;
+ 414   1       	R4=0xD1;
+ 415   1       	sixteenth(durD);	//Creates the duration of the note
+ 416   1      	YELLOW1=1;			//LIGHT IS OFF
+ 417   1      	return;
+ 418   1      }
+ 419          
+ 420          void playE6(char durD)
+ 421          {
+ 422   1      	RED2=0;				//RED2 is assigned to the E note (LIGHT IS ON)			
+ 423   1       	R3=0xF5;
+ 424   1       	R4=0x14;
+ 425   1       	sixteenth(durD);	//Creates the duration of the note
+ 426   1      	RED2=1;				//LIGHT IS OFF
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 8   
+
+ 427   1      	return;
+ 428   1      }
+ 429          
+ 430          void playBreath(char durD)
+ 431          {
+ 432   1          TR0=0;				//TURN OFF THE TIMER
+ 433   1      	sixteenth(durD);	//DELAY
+ 434   1      	TR0=1;				//TURN ON TIMER
+ 435   1      	return;
+ 436   1      }
+ 437          
+ 438          void playREST()
+ 439          {
+ 440   1       	R3=0x00;		//Reset the values of the registers
+ 441   1      	R4=0x00;
+ 442   1      	TR0=0;			//TURN OFF TIMER
+ 443   1      	return;
+ 444   1      }
+ 445          
+ 446          void durlay(unsigned char x)
+ 447          {
+ 448   1      	long i=0;
+ 449   1      	for(i;i<x;i++);
+ 450   1      }
+ 451          
+ 452          void sixteenth(int mulofsixteenth)				// timer of .1 sec
+ 453          {
+ 454   1      	int psych = 0;
+ 455   1      	for(psych;psych<mulofsixteenth;psych++)
+ 456   1      	{
+ 457   2       		ET1 = 1;			// enable timer 2;
+ 458   2      		TMOD=0x11;			// both timers in mode 1
+ 459   2      		TL1=0xFE;			// These values were calculated to obtain a delay of 0.1 sec
+ 460   2      		TH1=0x87;
+ 461   2      		TR1=1; 				// start timer.
+ 462   2      		while(TF1==0); 		// run until TF turns to 1
+ 463   2       		TR1=0; 				// stop timer
+ 464   2      		TF1=0; 				// reset the flag
+ 465   2      	}
+ 466   1      }
+ 467          
+ 468          
+ 469          
+ 470          
+ 471          void game1()
+ 472          {
+ 473   1      	randnum = rand() % 11;
+ 474   1      	attempts = 0;               // NUMBER OF GUESSES MADE
+ 475   1      	exit = 0;
+ 476   1      	do
+ 477   1      	{
+ 478   2      			attempts++;
+ 479   2      			donesig = 0;
+ 480   2      			guessnum = 0;
+ 481   2      			while(donesig == 0 && exit == 0)
+ 482   2      			{
+ 483   3      				//increment button
+ 484   3      				if(SW7 == 0)
+ 485   3      				{
+ 486   4      					do
+ 487   4      					{
+ 488   5      						durlay(20);             //debounce delay
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 9   
+
+ 489   5      					}while(SW7 == 0);
+ 490   4      					guessnum++;
+ 491   4      					if(guessnum == 1) {alloff();
+ 492   5      														 RED1 = 0;}
+ 493   4      					if(guessnum == 2) {alloff();
+ 494   5      														 AMBER1 = 0;}
+ 495   4      					if(guessnum == 3) {alloff();
+ 496   5      														 YELLOW1 = 0;}
+ 497   4      					if(guessnum == 4) {alloff();
+ 498   5      														 YELLOW2 = 0;}
+ 499   4      					if(guessnum == 5) {alloff();
+ 500   5      														 BLUE = 0;}
+ 501   4      					if(guessnum == 6) {alloff();
+ 502   5      														 GREEN1 = 0;}
+ 503   4      					if(guessnum == 7) {alloff();
+ 504   5      														 GREEN2 = 0;}
+ 505   4      					if(guessnum == 8) {alloff();
+ 506   5      														 RED2 = 0;}
+ 507   4      					if(guessnum == 9) {alloff();
+ 508   5      														 AMBER2 = 0;}
+ 509   4      					if(guessnum == 10) allon();
+ 510   4      				}
+ 511   3      				
+ 512   3      				if(SW5 == 0)         // INDICATES THE USER IS FINISHED INCREMENTING
+ 513   3      				{
+ 514   4      					do
+ 515   4      					{
+ 516   5      						durlay(20);             //debounce delay
+ 517   5      					}while(SW5 == 0);
+ 518   4      					if (randnum == guessnum) 
+ 519   4      					{
+ 520   5      						exit = 1;
+ 521   5      						attempts = 3;
+ 522   5      					}
+ 523   4      					alloff();
+ 524   4      					g1compare(randnum,guessnum);
+ 525   4      					donesig = 1;
+ 526   4      				}
+ 527   3      			}
+ 528   2      	}while(attempts < 3);
+ 529   1      	alloff();
+ 530   1      
+ 531   1      	return;
+ 532   1      }
+ 533          	
+ 534          void game2()
+ 535          {
+ 536   1      	int slength = 2000;		//NOISE LENGTH
+ 537   1      	char i;					//RANDOM NUMBER TO PICK THE CASE
+ 538   1      	char exit=0;			//EXIT FROM THE GAME IF 1
+ 539   1      	durlay(10000);			//DELAY
+ 540   1      	i = rand() % 4;			//RANDOM NUMBER FROM 0-8
+ 541   1      	i++;					//MAKE THE RANDOM NUMBER 1-9 INSTEAD OF 0-8
+ 542   1      	if(i==1)				//CASE 1
+ 543   1        	{
+ 544   2      		while(SW1!=0 || exit!=1)
+ 545   2      		{
+ 546   3      		  	if(SW1==0)		//WIN (RIGHT BUTTON IS PRESSED)
+ 547   3      		  	{
+ 548   4      				allon();	//TURN ON ALL OF THE LIGHT
+ 549   4      				while(slength >= 0)		//MAKE NOISE
+ 550   4      				{
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 10  
+
+ 551   5      					SPEAKER = !SPEAKER;
+ 552   5      					durlay(20);
+ 553   5      					SPEAKER = !SPEAKER;
+ 554   5      					durlay(50);
+ 555   5      					slength--;
+ 556   5      				}
+ 557   4      				SPEAKER = 1; //TURN OFF SPEAKER
+ 558   4      				alloff();	 //TURN OFF ALL LIGHTS
+ 559   4      				return;
+ 560   4      			}
+ 561   3      			if(SW2==0 || SW3==0 || SW4==0 || SW5==0 || SW6==0 || SW7==0 || SW8==0 || SW9==0)  //LOSE (WRONG BUTTON 
+             -IS PRESSED)
+ 562   3      			{
+ 563   4      				RED1=0;		 //SHOW THE CORRECT LIGHT
+ 564   4      				while(slength >= 0)	//MAKE NOISE
+ 565   4      				{
+ 566   5      					SPEAKER = !SPEAKER;
+ 567   5      					durlay(35);
+ 568   5      					SPEAKER = !SPEAKER;
+ 569   5      					durlay(80);
+ 570   5      					slength--;
+ 571   5      				}
+ 572   4      				SPEAKER = 1; //TURN OFF SPEAKER
+ 573   4      				alloff();    //TURN OFF ALL LIGHTS
+ 574   4      				exit=1;		 //EXIT GAME
+ 575   4      				return;
+ 576   4      			}
+ 577   3      		}	
+ 578   2      	}
+ 579   1      	/*if(i==2)  //CASE 2
+ 580   1        	{
+ 581   1      		while(SW2!=0 || exit!=1)
+ 582   1      		{
+ 583   1      		  	if(SW2==0)
+ 584   1      		  	{
+ 585   1      				allon();
+ 586   1      				while(slength >= 0)
+ 587   1      				{
+ 588   1      					SPEAKER = !SPEAKER;
+ 589   1      					durlay(20);
+ 590   1      					SPEAKER = !SPEAKER;
+ 591   1      					durlay(50);
+ 592   1      					slength--;
+ 593   1      				}
+ 594   1      				SPEAKER = 1;
+ 595   1      				alloff();
+ 596   1      				return;
+ 597   1      			}
+ 598   1      			if(SW1==0 || SW3==0 || SW4==0 || SW5==0 || SW6==0 || SW7==0 || SW8==0 || SW9==0)
+ 599   1      			{
+ 600   1      				AMBER1=0;
+ 601   1      				while(slength >= 0)
+ 602   1      				{
+ 603   1      					SPEAKER = !SPEAKER;
+ 604   1      					durlay(35);
+ 605   1      					SPEAKER = !SPEAKER;
+ 606   1      					durlay(80);
+ 607   1      					slength--;
+ 608   1      				}
+ 609   1      				SPEAKER = 1;
+ 610   1      				alloff();
+ 611   1      				exit=1;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 11  
+
+ 612   1      				return;
+ 613   1      			}
+ 614   1      		}	
+ 615   1      	} 
+ 616   1      	if(i==3)  //CASE 3
+ 617   1        	{
+ 618   1      		while(SW3!=0 || exit!=1)
+ 619   1      		{
+ 620   1      		  	if(SW3==0)
+ 621   1      		  	{
+ 622   1      				allon();
+ 623   1      				while(slength >= 0)
+ 624   1      				{
+ 625   1      					SPEAKER = !SPEAKER;
+ 626   1      					durlay(20);
+ 627   1      					SPEAKER = !SPEAKER;
+ 628   1      					durlay(50);
+ 629   1      					slength--;
+ 630   1      				}
+ 631   1      				SPEAKER = 1;
+ 632   1      				alloff();
+ 633   1      				return;
+ 634   1      			}
+ 635   1      			if(SW1==0 || SW2==0 || SW4==0 || SW5==0 || SW6==0 || SW7==0 || SW8==0 || SW9==0)
+ 636   1      			{
+ 637   1      				YELLOW1=0;
+ 638   1      				while(slength >= 0)
+ 639   1      				{
+ 640   1      					SPEAKER = !SPEAKER;
+ 641   1      					durlay(35);
+ 642   1      					SPEAKER = !SPEAKER;
+ 643   1      					durlay(80);
+ 644   1      					slength--;
+ 645   1      				}
+ 646   1      				SPEAKER = 1;
+ 647   1      				alloff();
+ 648   1      				exit=1;
+ 649   1      				return;
+ 650   1      			}
+ 651   1      		}	
+ 652   1      	}
+ 653   1      	if(i==4) //CASE 4
+ 654   1        	{
+ 655   1      		while(SW4!=0 || exit!=1)
+ 656   1      		{
+ 657   1      		  	if(SW4==0)
+ 658   1      		  	{
+ 659   1      				allon();
+ 660   1      				while(slength >= 0)
+ 661   1      				{
+ 662   1      					SPEAKER = !SPEAKER;
+ 663   1      					durlay(20);
+ 664   1      					SPEAKER = !SPEAKER;
+ 665   1      					durlay(50);
+ 666   1      					slength--;
+ 667   1      				}
+ 668   1      				SPEAKER = 1; 
+ 669   1      				alloff();
+ 670   1      				return;
+ 671   1      			}
+ 672   1      			if(SW2==0 || SW3==0 || SW1==0 || SW5==0 || SW6==0 || SW7==0 || SW8==0 || SW9==0)
+ 673   1      			{
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 12  
+
+ 674   1      				YELLOW2=0;
+ 675   1      				while(slength >= 0)
+ 676   1      				{
+ 677   1      					SPEAKER = !SPEAKER;
+ 678   1      					durlay(35);
+ 679   1      					SPEAKER = !SPEAKER;
+ 680   1      					durlay(80);
+ 681   1      					slength--;
+ 682   1      				}
+ 683   1      				SPEAKER = 1;
+ 684   1      				alloff();
+ 685   1      				exit=1;
+ 686   1      				return;
+ 687   1      			}
+ 688   1      		}	
+ 689   1      	}
+ 690   1      	if(i==5) //CASE 5
+ 691   1        	{
+ 692   1      		while(SW5!=0 || exit!=1)
+ 693   1      		{
+ 694   1      		  	if(SW5==0)
+ 695   1      		  	{
+ 696   1      				allon();
+ 697   1      				while(slength >= 0)
+ 698   1      				{
+ 699   1      					SPEAKER = !SPEAKER;
+ 700   1      					durlay(20);
+ 701   1      					SPEAKER = !SPEAKER;
+ 702   1      					durlay(50);
+ 703   1      					slength--;
+ 704   1      				}
+ 705   1      				SPEAKER = 1;
+ 706   1      				alloff();
+ 707   1      				return;
+ 708   1      			}
+ 709   1      			if(SW2==0 || SW3==0 || SW4==0 || SW1==0 || SW6==0 || SW7==0 || SW8==0 || SW9==0)
+ 710   1      			{
+ 711   1      				BLUE=0;
+ 712   1      				while(slength >= 0)
+ 713   1      				{
+ 714   1      					SPEAKER = !SPEAKER;
+ 715   1      					durlay(35);
+ 716   1      					SPEAKER = !SPEAKER;
+ 717   1      					durlay(80);
+ 718   1      					slength--;
+ 719   1      				}
+ 720   1      				SPEAKER = 1; 
+ 721   1      				alloff();
+ 722   1      				exit=1;
+ 723   1      				return;
+ 724   1      			}
+ 725   1      		}	
+ 726   1      	}
+ 727   1      	if(i==6) //CASE 6
+ 728   1        	{
+ 729   1      		while(SW6!=0 || exit!=1)
+ 730   1      		{
+ 731   1      		  	if(SW6==0)
+ 732   1      		  	{
+ 733   1      				allon();
+ 734   1      				while(slength >= 0)
+ 735   1      				{
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 13  
+
+ 736   1      					SPEAKER = !SPEAKER;
+ 737   1      					durlay(20);
+ 738   1      					SPEAKER = !SPEAKER;
+ 739   1      					durlay(50);
+ 740   1      					slength--;
+ 741   1      				}
+ 742   1      				SPEAKER = 1;
+ 743   1      				alloff();
+ 744   1      				return;
+ 745   1      			}
+ 746   1      			if(SW2==0 || SW3==0 || SW4==0 || SW5==0 || SW1==0 || SW7==0 || SW8==0 || SW9==0)
+ 747   1      			{
+ 748   1      				GREEN1=0;
+ 749   1      				while(slength >= 0)
+ 750   1      				{
+ 751   1      					SPEAKER = !SPEAKER;
+ 752   1      					durlay(35);
+ 753   1      					SPEAKER = !SPEAKER;
+ 754   1      					durlay(80);
+ 755   1      					slength--;
+ 756   1      				}
+ 757   1      				SPEAKER = 1;
+ 758   1      				alloff();
+ 759   1      				exit=1;
+ 760   1      				return;
+ 761   1      			}
+ 762   1      		}	
+ 763   1      	} 
+ 764   1      	if(i==7) //CASE 7
+ 765   1        	{
+ 766   1      		while(SW7!=0 || exit!=1)
+ 767   1      		{
+ 768   1      		  	if(SW7==0)
+ 769   1      		  	{
+ 770   1      				allon();
+ 771   1      				while(slength >= 0)
+ 772   1      				{
+ 773   1      					SPEAKER = !SPEAKER;
+ 774   1      					durlay(20);
+ 775   1      					SPEAKER = !SPEAKER;
+ 776   1      					durlay(50);
+ 777   1      					slength--;
+ 778   1      				}
+ 779   1      				SPEAKER = 1;
+ 780   1      				alloff();
+ 781   1      				return;
+ 782   1      			}
+ 783   1      			if(SW2==0 || SW3==0 || SW4==0 || SW5==0 || SW6==0 || SW1==0 || SW8==0 || SW9==0)
+ 784   1      			{
+ 785   1      				GREEN2=0;
+ 786   1      				while(slength >= 0)
+ 787   1      				{
+ 788   1      					SPEAKER = !SPEAKER;
+ 789   1      					durlay(35);
+ 790   1      					SPEAKER = !SPEAKER;
+ 791   1      					durlay(80);
+ 792   1      					slength--;
+ 793   1      				}
+ 794   1      				SPEAKER = 1;
+ 795   1      				alloff();
+ 796   1      				exit=1;
+ 797   1      				return;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 14  
+
+ 798   1      			}
+ 799   1      		}	
+ 800   1      	}
+ 801   1      
+ 802   1      
+ 803   1      
+ 804   1      	if(i==8)	   //Case 8
+ 805   1        	{
+ 806   1      		while(SW8!=0 || exit!=1)
+ 807   1      		{
+ 808   1      		  	if(SW8==0)
+ 809   1      		  	{
+ 810   1      				allon();
+ 811   1      				while(slength >= 0)
+ 812   1      				{
+ 813   1      					SPEAKER = !SPEAKER;
+ 814   1      					durlay(20);
+ 815   1      					SPEAKER = !SPEAKER;
+ 816   1      					durlay(50);
+ 817   1      					slength--;
+ 818   1      				}
+ 819   1      				SPEAKER = 1; 
+ 820   1      				alloff();
+ 821   1      				return;
+ 822   1      			}
+ 823   1      			if(SW2==0 || SW3==0 || SW4==0 || SW5==0 || SW6==0 || SW7==0 || SW1==0 || SW9==0)
+ 824   1      			{
+ 825   1      				RED2=0;
+ 826   1      				while(slength >= 0)
+ 827   1      				{
+ 828   1      					SPEAKER = !SPEAKER;
+ 829   1      					durlay(35);
+ 830   1      					SPEAKER = !SPEAKER;
+ 831   1      					durlay(80);
+ 832   1      					slength--;
+ 833   1      				}
+ 834   1      				SPEAKER = 1;
+ 835   1      				alloff();
+ 836   1      				exit=1;
+ 837   1      				return;
+ 838   1      			}
+ 839   1      		}	
+ 840   1      	}*/
+ 841   1      
+ 842   1      
+ 843   1      
+ 844   1      	if(i==2)   //Case 9
+ 845   1        	{
+ 846   2      		while(SW9!=0 || exit!=1)
+ 847   2      		{
+ 848   3      		  	if(SW9==0)
+ 849   3      		  	{
+ 850   4      				allon();
+ 851   4      				while(slength >= 0)
+ 852   4      				{
+ 853   5      					SPEAKER = !SPEAKER;
+ 854   5      					durlay(20);
+ 855   5      					SPEAKER = !SPEAKER;
+ 856   5      					durlay(50);
+ 857   5      					slength--;
+ 858   5      				}
+ 859   4      				SPEAKER = 1;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 15  
+
+ 860   4      				alloff();
+ 861   4      				return;
+ 862   4      			}
+ 863   3      			if(SW2==0 || SW3==0 || SW4==0 || SW5==0 || SW6==0 || SW7==0 || SW8==0 || SW1==0)
+ 864   3      			{
+ 865   4      				AMBER2=0;
+ 866   4      				while(slength >= 0)
+ 867   4      				{
+ 868   5      					SPEAKER = !SPEAKER;
+ 869   5      					durlay(35);
+ 870   5      					SPEAKER = !SPEAKER;
+ 871   5      					durlay(80);
+ 872   5      					slength--;
+ 873   5      				}
+ 874   4      				SPEAKER = 1;
+ 875   4      				alloff();
+ 876   4      				exit=1;
+ 877   4      				return;
+ 878   4      			}
+ 879   3      		}	
+ 880   2      	}
+ 881   1      	return;
+ 882   1      }
+ 883          
+ 884          void game3()					//Pathfinding Game
+ 885          {
+ 886   1      
+ 887   1      	char map= rand() % 2;	   	//Initialize variable map, random number between 0 & 1
+ 888   1      	AMBER2=0;	   				//Turn on LED (Bottom Right)
+ 889   1      	current = 9;   				//Initialize current positions, 
+ 890   1      				   				//there are 9 positions on the map(board)
+ 891   1          win = 0;	   				//Initialize win variable, used to indicate
+ 892   1      				   				//if the user has found the exit.
+ 893   1      	map = 0;					//Since we ran out of space, we have to limit
+ 894   1      								//the game to only one map layout.
+ 895   1      	if(map==0)					//map layout 0
+ 896   1      	{
+ 897   2      		do
+ 898   2      		{
+ 899   3      			
+ 900   3      			if(current==9)		//current position is at SW9
+ 901   3      			{
+ 902   4      				do
+ 903   4      				{
+ 904   5      					if(SW8==0)				 //If SW8 is pressed
+ 905   5      					{
+ 906   6      						alloff();			 //Turns all previous LEDS off
+ 907   6      						do
+ 908   6      						{
+ 909   7      							durlay(20);		//debounce delay	
+ 910   7      						}while(SW8==0);	
+ 911   6      						RED2=0;				//Turns on red LED for current position
+ 912   6      						current=8;			//sets current position to SW8
+ 913   6      					}
+ 914   5      				    if(SW6==0)				//If SW6 is pressed
+ 915   5      					{
+ 916   6      						alloff();			//Turns all previous LEDS off
+ 917   6      						do
+ 918   6      						{	
+ 919   7      							durlay(20);		//debounce delay
+ 920   7      						}while(SW6==0);	
+ 921   6      						GREEN1=0;			//Turns on green LED for current position
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 16  
+
+ 922   6      						current=6;			//sets current position to SW6
+ 923   6      					}
+ 924   5      					durlay(20);
+ 925   5      				}while(current == 9);
+ 926   4      			}
+ 927   3      			if(current==8)				  	//current position is at SW8
+ 928   3      			{
+ 929   4      				do
+ 930   4      				{
+ 931   5      					if(SW7==0)			 	//If SW7 is pressed
+ 932   5      					{
+ 933   6      						alloff();		 	//Turns all previous LEDS off
+ 934   6      						do
+ 935   6      						{
+ 936   7      							durlay(20);		//debounce delay	
+ 937   7      						}while(SW7==0);	
+ 938   6      						GREEN2=0;			//Turns on green LED for current position
+ 939   6      						current=7;			//sets current position to SW7
+ 940   6      					}
+ 941   5      					if(SW5==0)				
+ 942   5      					{
+ 943   6      						alloff();
+ 944   6      						do
+ 945   6      						{
+ 946   7      							durlay(20);		
+ 947   7      						}while(SW5==0);	
+ 948   6      						BLUE=0;
+ 949   6      						current=5;
+ 950   6      					}
+ 951   5      					if(SW9==0)
+ 952   5      					{
+ 953   6      						alloff();
+ 954   6      						do
+ 955   6      						{
+ 956   7      							durlay(20);		
+ 957   7      						}while(SW9==0);	
+ 958   6      						AMBER2=0;
+ 959   6      						current=9;
+ 960   6      					}
+ 961   5      					durlay(20);
+ 962   5      				}while(current == 8);
+ 963   4      			}
+ 964   3      			if(current==7)					//Similar conditions are applied for positions 1-9
+ 965   3      			{
+ 966   4      				do
+ 967   4      				{
+ 968   5      					if(SW4==0)
+ 969   5      					{
+ 970   6      						alloff();
+ 971   6      						do
+ 972   6      						{	
+ 973   7      							durlay(20);		
+ 974   7      						}while(SW4==0);	
+ 975   6      						YELLOW2=0;
+ 976   6      						current=4;
+ 977   6      					}
+ 978   5      					if(SW8==0)
+ 979   5      					{
+ 980   6      						alloff();
+ 981   6      						do
+ 982   6      						{
+ 983   7      							durlay(20);		
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 17  
+
+ 984   7      						}while(SW8==0);	
+ 985   6      						RED2=0;
+ 986   6      						current=8;
+ 987   6      					}
+ 988   5      					durlay(20);
+ 989   5      				}while(current == 7);
+ 990   4      			}
+ 991   3      			if(current==6)
+ 992   3      			{
+ 993   4      				do
+ 994   4      				{
+ 995   5      					if(SW9==0)
+ 996   5      					{
+ 997   6      						alloff();
+ 998   6      						do
+ 999   6      						{
+1000   7      							durlay(20);		
+1001   7      						}while(SW9==0);	
+1002   6      						AMBER2=0;
+1003   6      						current=9;
+1004   6      					}
+1005   5      					if(SW5==0)
+1006   5      					{
+1007   6      						alloff();
+1008   6      						do
+1009   6      						{
+1010   7      							durlay(20);		
+1011   7      						}while(SW5==0);	
+1012   6      						BLUE=0;
+1013   6      						current=5;
+1014   6      					}
+1015   5      					
+1016   5      					if(SW3==0)
+1017   5      					{
+1018   6      						alloff();
+1019   6      						do
+1020   6      						{	
+1021   7      							durlay(20);		
+1022   7      						}while(SW3==0);	
+1023   6      						YELLOW1=0;
+1024   6      						current=3;
+1025   6      					}
+1026   5      					durlay(20);
+1027   5      				}while(current == 6);
+1028   4      			}
+1029   3      			if(current==4)
+1030   3      			{
+1031   4      				do
+1032   4      				{
+1033   5      					if(SW7==0)
+1034   5      					{
+1035   6      						alloff();
+1036   6      						do
+1037   6      						{
+1038   7      							durlay(20);		
+1039   7      						}while(SW7==0);	
+1040   6      						GREEN2=0;
+1041   6      						current=7;
+1042   6      					}
+1043   5      					if(SW5==0)
+1044   5      					{
+1045   6      						alloff();
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 18  
+
+1046   6      						do
+1047   6      						{
+1048   7      							durlay(20);		
+1049   7      						}while(SW5==0);	
+1050   6      						BLUE=0;
+1051   6      						current=5;
+1052   6      					}
+1053   5      					if(SW1==0)
+1054   5      					{
+1055   6      						alloff();
+1056   6      						RED1=0;
+1057   6      						do{
+1058   7      						durlay(20);
+1059   7      						}while(SW1==0);
+1060   6      						buzzwin();
+1061   6      						current=1;	
+1062   6      					}
+1063   5      					durlay(20);
+1064   5      				}while(current == 4);
+1065   4      			}
+1066   3      			if(current==3)
+1067   3      			{
+1068   4      				do
+1069   4      				{
+1070   5      					if(SW2==0)
+1071   5      					{
+1072   6      						alloff();
+1073   6      						do
+1074   6      						{	
+1075   7      							durlay(20);		
+1076   7      						}while(SW2==0);	
+1077   6      						AMBER1=0;
+1078   6      						current=2;
+1079   6      					}
+1080   5      					if(SW6==0)
+1081   5      					{
+1082   6      						alloff();
+1083   6      						do
+1084   6      						{	
+1085   7      							durlay(20);		
+1086   7      						}while(SW6==0);	
+1087   6      						GREEN1=0;
+1088   6      						current=6;
+1089   6      					}
+1090   5      					durlay(20);
+1091   5      				}while(current == 3);
+1092   4      			}
+1093   3      			if(current==2)
+1094   3      			{
+1095   4      				do
+1096   4      				{
+1097   5      					if(SW1==0)
+1098   5      					{
+1099   6      						alloff();
+1100   6      						RED1=0;
+1101   6      						do{
+1102   7      						durlay(20);
+1103   7      						}while(SW1==0);
+1104   6      						buzzwin();
+1105   6      						current=1;	
+1106   6      					}
+1107   5      					if(SW5==0)
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 19  
+
+1108   5      					{
+1109   6      						alloff();
+1110   6      						do
+1111   6      						{
+1112   7      							durlay(20);		
+1113   7      						}while(SW5==0);	
+1114   6      						BLUE=0;
+1115   6      						current=5;
+1116   6      					}
+1117   5      					if(SW3==0)
+1118   5      					{
+1119   6      						alloff();
+1120   6      						do
+1121   6      						{	
+1122   7      							durlay(20);		
+1123   7      						}while(SW3==0);	
+1124   6      						YELLOW1=0;
+1125   6      						current=3;
+1126   6      					}
+1127   5      					durlay(20);
+1128   5      				}while(current == 2);
+1129   4      			}	
+1130   3      		  	if(current==1)						 //If current position is 1
+1131   3      		  	{
+1132   4      			 		alloff();					 //Turns previous LEDS off
+1133   4      					do{							 
+1134   5      					durlay(20);					 //Debounce delay
+1135   5      					}while(SW1==0);				 
+1136   4      					RED1 = 0;					 //Turns on RED1 LED
+1137   4      					buzzwin();					 //Call a function to generate happy sound
+1138   4      					win = 1;					 //Set the flag for winning the game
+1139   4      			}
+1140   3      			if(current==5)						 //If current position is 5
+1141   3      		  	{
+1142   4      			 		alloff();
+1143   4      					do{
+1144   5      					durlay(20);
+1145   5      					}while(SW5==0);
+1146   4      					BLUE = 0;
+1147   4      					buzz();						 //Plays loud buzz
+1148   4      					return;						 //Return to game menu
+1149   4      			}
+1150   3      							
+1151   3      		}while(win==0);							 //Loop until win flag is raised.
+1152   2      	}
+1153   1      	/*if(map==1)								 //Map lay out 1
+1154   1      	{
+1155   1      		do
+1156   1      		{
+1157   1      			
+1158   1      			if(current==9)
+1159   1      			{
+1160   1      				do
+1161   1      				{
+1162   1      					if(SW8==0)
+1163   1      					{
+1164   1      						alloff();
+1165   1      						do
+1166   1      						{
+1167   1      							durlay(20);		
+1168   1      						}while(SW8==0);	
+1169   1      						RED2=0;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 20  
+
+1170   1      						current=8;
+1171   1      					}
+1172   1      				    if(SW6==0)
+1173   1      					{
+1174   1      						alloff();
+1175   1      						do
+1176   1      						{	
+1177   1      							durlay(20);		
+1178   1      						}while(SW6==0);	
+1179   1      						GREEN1=0;
+1180   1      						current=6;
+1181   1      					}
+1182   1      					durlay(20);
+1183   1      				}while(current == 9);
+1184   1      			}
+1185   1      			if(current==8)
+1186   1      			{
+1187   1      				do
+1188   1      				{
+1189   1      					if(SW7==0)
+1190   1      					{
+1191   1      						alloff();
+1192   1      						do
+1193   1      						{
+1194   1      							durlay(20);		
+1195   1      						}while(SW7==0);	
+1196   1      						GREEN2=0;
+1197   1      						current=7;
+1198   1      					}
+1199   1      					if(SW5==0)
+1200   1      					{
+1201   1      						alloff();
+1202   1      						do
+1203   1      						{
+1204   1      							durlay(20);		
+1205   1      						}while(SW5==0);	
+1206   1      						BLUE=0;
+1207   1      						current=5;
+1208   1      					}
+1209   1      					if(SW9==0)
+1210   1      					{
+1211   1      						alloff();
+1212   1      						do
+1213   1      						{
+1214   1      							durlay(20);		
+1215   1      						}while(SW9==0);	
+1216   1      						AMBER2=0;
+1217   1      						current=9;
+1218   1      					}
+1219   1      					durlay(20);
+1220   1      				}while(current == 8);
+1221   1      			}
+1222   1      			if(current==7)
+1223   1      			{
+1224   1      				do
+1225   1      				{
+1226   1      					if(SW4==0)
+1227   1      					{
+1228   1      						alloff();
+1229   1      						do
+1230   1      						{	
+1231   1      							durlay(20);		
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 21  
+
+1232   1      						}while(SW4==0);	
+1233   1      						YELLOW2=0;
+1234   1      						current=4;
+1235   1      					}
+1236   1      					if(SW8==0)
+1237   1      					{
+1238   1      						alloff();
+1239   1      						do
+1240   1      						{
+1241   1      							durlay(20);		
+1242   1      						}while(SW8==0);	
+1243   1      						RED2=0;
+1244   1      						current=8;
+1245   1      					}
+1246   1      					durlay(20);
+1247   1      				}while(current == 7);
+1248   1      			}
+1249   1      			if(current==6)
+1250   1      			{
+1251   1      				do
+1252   1      				{
+1253   1      					if(SW9==0)
+1254   1      					{
+1255   1      						alloff();
+1256   1      						do
+1257   1      						{
+1258   1      							durlay(20);		
+1259   1      						}while(SW9==0);	
+1260   1      						AMBER2=0;
+1261   1      						current=9;
+1262   1      					}
+1263   1      					if(SW5==0)
+1264   1      					{
+1265   1      						alloff();
+1266   1      						do
+1267   1      						{
+1268   1      							durlay(20);		
+1269   1      						}while(SW5==0);	
+1270   1      						BLUE=0;
+1271   1      						current=5;
+1272   1      					}
+1273   1      					
+1274   1      					if(SW3==0)
+1275   1      					{
+1276   1      						alloff();
+1277   1      						do
+1278   1      						{	
+1279   1      							durlay(20);		
+1280   1      						}while(SW3==0);	
+1281   1      						YELLOW1=0;
+1282   1      						current=3;
+1283   1      					}
+1284   1      					durlay(20);
+1285   1      				}while(current == 6);
+1286   1      			}
+1287   1      			if(current==5)
+1288   1      			{
+1289   1      				do
+1290   1      				{
+1291   1      				  	if(SW8==0)
+1292   1      					{
+1293   1      						alloff();
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 22  
+
+1294   1      						do
+1295   1      						{
+1296   1      							durlay(20);		
+1297   1      						}while(SW8==0);	
+1298   1      						RED2=0;
+1299   1      						current=8;
+1300   1      					}
+1301   1      					if(SW4==0)
+1302   1      					{
+1303   1      						alloff();
+1304   1      						do
+1305   1      						{	
+1306   1      							durlay(20);		
+1307   1      						}while(SW4==0);	
+1308   1      						YELLOW2=0;
+1309   1      						current=4;
+1310   1      					}
+1311   1      					if(SW6==0)
+1312   1      					{
+1313   1      						alloff();
+1314   1      						do
+1315   1      						{	
+1316   1      							durlay(20);		
+1317   1      						}while(SW6==0);	
+1318   1      						GREEN1=0;
+1319   1      						current=6;
+1320   1      					}
+1321   1      					if(SW2==0)
+1322   1      					{
+1323   1      						alloff();
+1324   1      						do
+1325   1      						{	
+1326   1      							durlay(20);		
+1327   1      						}while(SW2==0);	
+1328   1      						AMBER1=0;
+1329   1      						current=2;
+1330   1      					}
+1331   1      					durlay(20);
+1332   1      				}while(current == 5);
+1333   1      			}
+1334   1      			if(current==4)
+1335   1      			{
+1336   1      				do
+1337   1      				{
+1338   1      					if(SW7==0)
+1339   1      					{
+1340   1      						alloff();
+1341   1      						do
+1342   1      						{
+1343   1      							durlay(20);		
+1344   1      						}while(SW7==0);	
+1345   1      						GREEN2=0;
+1346   1      						current=7;
+1347   1      					}
+1348   1      					if(SW5==0)
+1349   1      					{
+1350   1      						alloff();
+1351   1      						do
+1352   1      						{
+1353   1      							durlay(20);		
+1354   1      						}while(SW5==0);	
+1355   1      						BLUE=0;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 23  
+
+1356   1      						current=5;
+1357   1      					}
+1358   1      					if(SW1==0)
+1359   1      					{
+1360   1      						alloff();
+1361   1      						RED1=0;
+1362   1      						do{
+1363   1      						durlay(20);
+1364   1      						}while(SW1==0);
+1365   1      						buzzwin();
+1366   1      						current=1;	
+1367   1      					}
+1368   1      					durlay(20);
+1369   1      				}while(current == 4);
+1370   1      			}
+1371   1      			if(current==3)
+1372   1      			{
+1373   1      				do
+1374   1      				{
+1375   1      					if(SW2==0)
+1376   1      					{
+1377   1      						alloff();
+1378   1      						do
+1379   1      						{	
+1380   1      							durlay(20);		
+1381   1      						}while(SW2==0);	
+1382   1      						AMBER1=0;
+1383   1      						current=2;
+1384   1      					}
+1385   1      					if(SW6==0)
+1386   1      					{
+1387   1      						alloff();
+1388   1      						do
+1389   1      						{	
+1390   1      							durlay(20);		
+1391   1      						}while(SW6==0);	
+1392   1      						GREEN1=0;
+1393   1      						current=6;
+1394   1      					}
+1395   1      					durlay(20);
+1396   1      				}while(current == 3);
+1397   1      			}
+1398   1      		  	if(current==1)
+1399   1      		  	{
+1400   1      			 		alloff();
+1401   1      					do{
+1402   1      					durlay(20);
+1403   1      					}while(SW1==0);
+1404   1      					RED1 = 0;
+1405   1      					buzzwin();
+1406   1      					win = 1;
+1407   1      			}
+1408   1      			if(current==2)
+1409   1      		  	{
+1410   1      			 		alloff();
+1411   1      					do{
+1412   1      					durlay(20);
+1413   1      					}while(SW2==0);
+1414   1      					AMBER1 = 0;
+1415   1      					buzz();
+1416   1      					return;
+1417   1      			}
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 24  
+
+1418   1      							
+1419   1      		}while(win==0);
+1420   1      	}*/
+1421   1      	return;							  //Return to game menu
+1422   1      	
+1423   1      }
+1424          
+1425          void buzz()							  //Function generate loud sound
+1426          {
+1427   1      	int slength = 1000;				 //Length of sound
+1428   1         while(slength >= 0)
+1429   1      		{
+1430   2      			SPEAKER = !SPEAKER;
+1431   2      			durlay(70);
+1432   2      			slength--;
+1433   2      		}
+1434   1      		durlay(1000);
+1435   1      		SPEAKER = 1; 
+1436   1      	return;
+1437   1      
+1438   1      }
+1439          void buzzwin()						//Function generate happy sound
+1440          {
+1441   1      	int slength = 1000;
+1442   1         while(slength >= 0)
+1443   1      		{
+1444   2      			SPEAKER = !SPEAKER;
+1445   2      			durlay(35);
+1446   2      			slength--;
+1447   2      		}
+1448   1      		durlay(1000);
+1449   1      		SPEAKER = 1; 
+1450   1      	return;
+1451   1      
+1452   1      }	
+1453          
+1454          void g1compare(char r, char g)
+1455          {
+1456   1      	int slength = 2000;      // DURATION OF SOUNDS MADE IN GAME 1
+1457   1      	unsigned int q = 0;
+1458   1      	char gue = g;
+1459   1      
+1460   1      	if(r == g)           //winning sound and display
+1461   1      	{
+1462   2      		while(gue>0)         //will flash lights and make sound based on the number
+1463   2      		{
+1464   3      			q = 0;
+1465   3      			slength = 100;
+1466   3      			allon();
+1467   3      			durlay(5000);
+1468   3      			while(slength >= 0)
+1469   3      			{
+1470   4      				SPEAKER = !SPEAKER;
+1471   4      				durlay(50);
+1472   4      				SPEAKER = !SPEAKER;
+1473   4      				durlay(100);
+1474   4      				slength--;
+1475   4      			}
+1476   3      			SPEAKER = 1;
+1477   3      			durlay(5000);
+1478   3      			alloff();
+1479   3      			gue--;
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 25  
+
+1480   3      			for(q;q<50000;q++);
+1481   3      		}
+1482   2      		return;
+1483   2      	}
+1484   1      
+1485   1      	if(r > g)            //too low sound and lights
+1486   1      	{
+1487   2      		RED1 = 0;
+1488   2      		AMBER1 = 0;
+1489   2      		YELLOW1 = 0;
+1490   2      		GREEN1 = 0;
+1491   2      		AMBER2 = 0;
+1492   2      		while(slength >= 0)
+1493   2      		{
+1494   3      			SPEAKER = !SPEAKER;
+1495   3      			durlay(100);
+1496   3      			slength--;
+1497   3      		}
+1498   2      		durlay(1000);
+1499   2      		SPEAKER = 1; 
+1500   2      		RED1 = 1;
+1501   2      		AMBER1 = 1;
+1502   2      		YELLOW1 = 1;
+1503   2      		GREEN1 = 1;
+1504   2      		AMBER2 = 1;
+1505   2      	}
+1506   1      
+1507   1      	if(r < g)             //too high sound and lights
+1508   1      	{
+1509   2      		RED1 = 0;
+1510   2      		AMBER1 = 0;
+1511   2      		YELLOW1 = 0;
+1512   2      		BLUE = 0;
+1513   2      		GREEN2 = 0;
+1514   2      		RED2 = 0;
+1515   2      		AMBER2 = 0;
+1516   2      		while(slength >= 0)
+1517   2      		{
+1518   3      			SPEAKER = !SPEAKER;
+1519   3      			durlay(10);
+1520   3      			slength--;
+1521   3      		}
+1522   2      		durlay(1000);
+1523   2      		SPEAKER = 1;
+1524   2      		RED1 = 1;
+1525   2      		AMBER1 = 1;
+1526   2      		YELLOW1 = 1;
+1527   2      		BLUE = 1;
+1528   2      		GREEN2 = 1;
+1529   2      		RED2 = 1;
+1530   2      		AMBER2 = 1;
+1531   2      	}
+1532   1      
+1533   1      	return;
+1534   1      }
+1535          	
+1536          	
+1537          	
+1538          	
+1539          	
+1540          	
+
+C51 COMPILER V6.02  JOELJECT                                                               12/09/2014 20:25:40 PAGE 26  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1985    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10      20
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
