@@ -48,6 +48,7 @@ void timer1_tone(void) interrupt 3 using 3
 	
 void timer0_durr(void) interrupt 1 using 3 
 {	
+	TR1 = 0;
 
 	if (noteTime > 0) // still playing the note, reset timer
 	{
@@ -78,6 +79,7 @@ void timer0_durr(void) interrupt 1 using 3
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	}
 
+	TR1 = 1;
 	return;
 }
 
@@ -141,6 +143,7 @@ void main()
 		}
 		case 2:
 		{
+			stopSong();
 			while(1)
 			{	
 				keyboardMode();

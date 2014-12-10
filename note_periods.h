@@ -33,7 +33,7 @@
 code unsigned int notes[] = {0,E3,F3,Gb3,G3,Ab3,A3,B3,C4,Db4,D4,Eb4,E4,F4,Gb4,G4,Ab4,A4,Bb4,B4,C5,Db5,D5,Eb5,E5,F5,Gb5};
 
 //only relevant for the keyboard function
-code unsigned char quarter[] = {8};
+code unsigned char quarter[] = {32};
 code unsigned char key1[] = {8};//C4
 code unsigned char key2[] = {10};//D4
 code unsigned char key3[] = {12};//E4
