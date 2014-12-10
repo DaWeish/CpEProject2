@@ -1,0 +1,125 @@
+C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:30:59 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg932.h"
+   2          #include "uart.h"
+   3          
+   4          #include "note_periods.h"
+   5          
+   6          #define OSCFREQ 7372800
+   7          
+   8          #define TICK_HIGH 0xfe
+   9          #define TICK_LOW 0x8f
+  10          
+  11          // Tempo is beats per minute
+  12          // Note duration is specified in 32nd notes
+  13          unsigned char tempo;
+  14          unsigned int note_durr_factor;
+  15          
+  16          sbit speaker = P1^7;
+  17          
+  18          unsigned char* note_ptr;
+  19          unsigned char* durr_ptr;
+  20          
+  21          unsigned char songSize = 0;
+  22          unsigned char currNote = 0;
+  23          
+  24          unsigned int noteTime = 0;
+  25          
+  26          bit looping = 0;
+  27            
+  28          void timer1_tone(void) interrupt 3 using 3
+  29          {
+  30   1        TH1 = notes[note_ptr[currNote]] >> 8;
+  31   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
+  32   1        speaker = ~speaker;
+  33   1      }
+  34            
+  35          void timer0_durr(void) interrupt 1 using 3 
+  36          {
+  37   1        if (noteTime > 0) // still playing the note, reset timer
+  38   1        {
+  39   2          TH0 = -(TICK_HIGH);
+  40   2          TL0 = -(TICK_LOW);
+  41   2          noteTime--;
+  42   2        }
+  43   1        else
+  44   1        {
+  45   2          if (currNote >= songSize)
+  46   2          {
+  47   3            currNote = 0;
+  48   3            if (!looping)
+  49   3            {
+  50   4              TR1 = 0;
+  51   4              TR0 = 0;
+  52   4            }
+  53   3          }
+  54   2          else
+  55   2          {
+C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:30:59 PAGE 2   
+
+  56   3            currNote++;
+  57   3          }
+  58   2          
+  59   2          TH0 = -(TICK_HIGH);
+  60   2          TL0 = -(TICK_LOW);
+  61   2          noteTime = note_durr_factor * durr_ptr[currNote];
+  62   2          TH1 = notes[note_ptr[currNote]] >> 8;
+  63   2          TL1 = notes[note_ptr[currNote]] & 0x00ff;
+  64   2        }
+  65   1      }
+  66          
+  67          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
+  68          
+  69          void main()
+  70          {
+  71   1        tempo = 60;
+  72   1        note_durr_factor  = (60*10000)/(32*tempo);
+  73   1        
+  74   1        uart_init();
+  75   1        
+  76   1        playSong(song1, durr1, song1Size, 1);
+  77   1      }
+  78          
+  79          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
+  80          {
+  81   1        // Set up timer and interrupts
+  82   1        TMOD = 0x11;
+  83   1        IEN0 = IEN0 | 0x8A;
+  84   1        looping = loop;
+  85   1        currNote = 0;
+  86   1        songSize = sizeOfSong;
+  87   1        note_ptr = song;
+  88   1        durr_ptr = durr;
+  89   1        
+  90   1        TH0 = -(TICK_HIGH);
+  91   1        TL0 = -(TICK_LOW);
+  92   1        noteTime = note_durr_factor * durr_ptr[currNote];
+  93   1        TH1 = notes[note_ptr[currNote]] >> 8;
+  94   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
+  95   1        
+  96   1        TR0 = 1;
+  97   1        TR1 = 1;
+  98   1      }
+  99          
+ 100          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    378    ----
+   CONSTANT SIZE    =     27    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

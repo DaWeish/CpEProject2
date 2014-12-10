@@ -1345,26 +1345,26 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\main.c</Name>
-        <ColumnNumber>24</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>11</CurrentLine>
+        <ColumnNumber>13</ColumnNumber>
+        <TopLine>58</TopLine>
+        <CurrentLine>83</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\reg932.h</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>209</CurrentLine>
+        <Name>reg932.h</Name>
+        <ColumnNumber>21</ColumnNumber>
+        <TopLine>131</TopLine>
+        <CurrentLine>225</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\uart.h</Name>
+        <Name>uart.h</Name>
         <ColumnNumber>17</ColumnNumber>
-        <TopLine>18</TopLine>
+        <TopLine>7</TopLine>
         <CurrentLine>58</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
@@ -1380,10 +1380,10 @@
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\note_periods.h</Name>
-        <ColumnNumber>15</ColumnNumber>
+        <Name>note_periods.h</Name>
+        <ColumnNumber>33</ColumnNumber>
         <TopLine>1</TopLine>
-        <CurrentLine>15</CurrentLine>
+        <CurrentLine>29</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
