@@ -59,10 +59,15 @@
 #define D7		((CLOCK/4)/2349.3)
 
 code unsigned int notes[] = 
+// 							 1, 2, 3 , 4, 5 , 6, 7 , 8,
 	{0,						E3,F3,Gb3,G3,Ab3,A3,Bb3,B3,
+// 9, 10,11, 12,13,14, 15,16, 17,18, 19,20,
 	C4,Db4,D4,Eb4,E4,F4,Gb4,G4,Ab4,A4,Bb4,B4,
+//21, 22,23, 24,25,26, 27,28, 29,30, 31,32,
 	C5,Db5,D5,Eb5,E5,F5,Gb5,G5,Ab5,A5,Bb5,B5,
+//33, 34,36, 37,38,39, 40,41, 42,43, 44,45,
 	C5,Db6,D6,Eb6,E6,F6,Gb6,G6,Ab6,A6,Bb6,B6,
+//46, 47,48
 	C6,Db7,D7};
 
 //only relevant for the keyboard function
