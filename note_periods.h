@@ -29,6 +29,7 @@
 #define E5 (65536 - 4189)
 #define F5 (65536 - 4189)
 #define Gb5 (65536 - 4189)
+<<<<<<< HEAD
 
 //note length
 #define sixteenth 2
@@ -49,7 +50,6 @@ code unsigned char key5[] = {15};//G4
 code unsigned char key6[] = {17};//A4
 code unsigned char keySize = 1;
 
-code unsigned char metLen[] = {sixteenth};
 code unsigned char song1[] = {8,10,12,15};
 code unsigned char durr1[] = {32,32,64,32};
 code unsigned char song1Size = 4;

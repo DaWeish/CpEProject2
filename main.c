@@ -24,7 +24,6 @@ sbit BUTTON9 = P2^2;
 unsigned int tempo;
 unsigned int note_durr_factor;
 unsigned int noteTime;
-unsigned int metFactor = 1;
 
 sbit speaker = P1^7;
 
