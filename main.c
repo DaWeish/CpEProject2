@@ -6,7 +6,7 @@
 #define OSCFREQ 7372800
 
 #define TICK_HIGH 0xfe
-#define TICK_LOW 0x8f
+#define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
 
 //DEFINE all buttons(labeled top left horizantally to buttom right)
 #define BUTTON1 P2^0;
@@ -21,11 +21,12 @@
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
-unsigned char tempo;
+unsigned int tempo;
 unsigned int note_durr_factor;
 
 sbit speaker = P1^7;
 
+bit looping = 0;
 
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
@@ -36,8 +37,6 @@ unsigned char currNote = 0;
 unsigned int noteTime = 0;
 
 unsigned char mode = 0;
-
-bit looping = 0;
 	
 void timer1_tone(void) interrupt 3 using 3
 {
@@ -49,10 +48,13 @@ void timer1_tone(void) interrupt 3 using 3
 	
 void timer0_durr(void) interrupt 1 using 3 
 {
+	TR1 = 0; // stop timers while function runs
+	TR0 = 0;
+	
 	if (noteTime > 0) // still playing the note, reset timer
 	{
-		TH0 = -(TICK_HIGH);
-		TL0 = -(TICK_LOW);
+		TH0 = TICK_HIGH;
+		TL0 = TICK_LOW;
 		noteTime--;
 	}
 	else
@@ -71,15 +73,18 @@ void timer0_durr(void) interrupt 1 using 3
 			currNote++;
 		}
 		
-		TH0 = -(TICK_HIGH);
-		TL0 = -(TICK_LOW);
+		TH0 = TICK_HIGH;
+		TL0 = TICK_LOW;
 		noteTime = note_durr_factor * durr_ptr[currNote];
 		TH1 = notes[note_ptr[currNote]] >> 8;
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	}
+	
+	TR0 = 1;
+	TR1 = 1;
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
 
 sbit light = P0^6;
 
@@ -89,13 +94,16 @@ void main()
 	P0M2 = 0x00;
 	P1M1 = 0x00;
 	P1M2 = 0x00;
+	looping = 1;
+	
 	light = 0;
+	
 	tempo = 60;
-	note_durr_factor  = (60*10000)/(32*tempo);
+	note_durr_factor  = 60*((10000/tempo)/32); //312
 	
 //	uart_init();
 	  
-	playSong(song1, durr1, song1Size, 1);
+	playSong(song1, durr1, song1Size);
 
 	while (1)
 	{
@@ -150,19 +158,18 @@ void main()
 	return;
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong)
 {
 	// Set up timer and interrupts
 	TMOD = 0x11;
 	IEN0 = IEN0 | 0x8A;
-	looping = loop;
 	currNote = 0;
 	songSize = sizeOfSong;
 	note_ptr = song;
 	durr_ptr = durr;
 	
-	TH0 = -(TICK_HIGH);
-	TL0 = -(TICK_LOW);
+	TH0 = TICK_HIGH;
+	TL0 = TICK_LOW;
 	noteTime = note_durr_factor * durr_ptr[currNote];
 	TH1 = notes[note_ptr[currNote]] >> 8;
 	TL1 = notes[note_ptr[currNote]] & 0x00ff;
