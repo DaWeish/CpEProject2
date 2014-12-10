@@ -1,6 +1,6 @@
 #include "reg932.h"
-#include "uart.h"
-
+//#include "uart.h"
+#include "uart.c"
 #include "note_periods.h"
 
 #define OSCFREQ 7372800
@@ -15,7 +15,7 @@ sbit BUTTON3 = P2^3;
 sbit BUTTON4 = P0^2;
 sbit BUTTON5 = P1^4;
 sbit BUTTON6 = P0^0;
-sbit BUTTON7 = P2^1;//#define BUTTON7 P2^1
+sbit BUTTON7 = P2^1;
 sbit BUTTON8 = P0^3;
 sbit BUTTON9 = P2^2;
 
@@ -27,7 +27,7 @@ unsigned int noteTime;
 
 sbit speaker = P1^7;
 
-bit looping = 0;
+bit looping;
 
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
@@ -61,7 +61,7 @@ void timer0_durr(void) interrupt 1 using 3
 		if (currNote >= songSize)
 		{
 			currNote = 0;
-			if (!looping)
+			if (looping == 0)
 			{
 				TR1 = 0;
 				TR0 = 0;
@@ -87,6 +87,7 @@ void stopSong(); // stops both timers
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
 void keyboardMode(void);
 void delay(unsigned int count);
+void transmitText(unsigned char* text, unsigned char size);
 
 void main()
 {
@@ -102,16 +103,20 @@ void main()
 	
 	tempo = 60;
 	note_durr_factor  = 60*((10000/tempo)/32); //312
-	
-//	uart_init();
-	  
+
+	//initialize UART
+	uart_init();
+	EA = 1;
+
 	while (1) {
 	switch(mode)
 	{
 		case 0:
 			stopSong();
 			playSong(song1, durr1, song1Size);
-
+			transmitText(song1Name, song1NameSize);
+			looping = 1;
+		
 			while(1)
 			{
 				if (BUTTON7 == 0)//get out if the mode button is pressed
@@ -129,6 +134,7 @@ void main()
 		{
 			stopSong();
 			playSong(key1, quarter, keySize);
+			looping = 1;
 
 			while(1)
 			{
@@ -144,6 +150,7 @@ void main()
 		case 2:
 		{
 			stopSong();
+			looping = 0;
 			while(1)
 			{	
 				keyboardMode();
@@ -162,9 +169,10 @@ void main()
 			mode = 0;
 	}
 	}
+
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong)
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong )
 {
 	// Set up timer and interrupts
 	TMOD = 0x11;
@@ -200,38 +208,47 @@ void keyboardMode(void)
 {
 	if(BUTTON1 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON1 == 0);
 		playSong(key1,quarter, keySize);//plays C4
 	}
 	if(BUTTON2 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON2 == 0);
 		playSong(key2,quarter, keySize);//plays C4
 	}
 	if(BUTTON3 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON3 == 0);
 		playSong(key3,quarter, keySize);//plays C4
 	}
 	if(BUTTON4 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON4 == 0);
 		playSong(key4,quarter, keySize);//plays C4
 	}
 	if(BUTTON5 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON5 == 0);
 		playSong(key5,quarter, keySize);//plays C4
 	}
 	if(BUTTON6 == 0)
 	{
-		delay(10);
+		delay(100);
 		while (BUTTON6 == 0);
 		playSong(key6,quarter, keySize);//plays C4
+	}
+}
+
+void transmitText(unsigned char* text, unsigned char size)
+{
+	unsigned char i;
+	for (i = 0; i < size; i++)
+	{
+		uart_transmit(text[i]);
 	}
 }

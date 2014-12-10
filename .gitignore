@@ -1,3 +1,4 @@
 *.LST
 *.OBJ
 *.build_log.htm
+*.__i
