@@ -9,15 +9,15 @@
 #define TICK_LOW 0x8f
 
 //DEFINE all buttons(labeled top left horizantally to buttom right)
-#define BUTTON1 P2^0;
-#define BUTTON2 P0^1;
-#define BUTTON3 P2^3;
-#define BUTTON4 P0^2;
-#define BUTTON5 P1^4;
-#define BUTTON6 P0^0;
-#define BUTTON7 P2^1;
-#define BUTTON8 P0^3;
-#define BUTTON9 P2^2;
+#define BUTTON1 P2^0
+#define BUTTON2 P0^1
+#define BUTTON3 P2^3
+#define BUTTON4 P0^2
+#define BUTTON5 P1^4
+#define BUTTON6 P0^0
+#define BUTTON7 P2^1
+#define BUTTON8 P0^3
+#define BUTTON9 P2^2
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
@@ -79,8 +79,35 @@ void timer0_durr(void) interrupt 1 using 3
 	}
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
 
+void keyboardMode(void)
+{
+		if(BUTTON1 == 0)
+		{
+			playSong(key1,keyboardQuarter, keySize);//plays C4
+		}
+		if(BUTTON2 == 0)
+		{
+			playSong(key2,keyboardQuarter, keySize);//plays C4
+		}
+		if(BUTTON3 == 0)
+		{
+			playSong(key3,keyboardQuarter, keySize);//plays C4
+		}
+		if(BUTTON4 == 0)
+		{
+			playSong(key4,keyboardQuarter, keySize);//plays C4
+		}
+		if(BUTTON5 == 0)
+		{
+			playSong(key5,keyboardQuarter, keySize);//plays C4
+		}
+		if(BUTTON6 == 0)
+		{
+			playSong(key6,keyboardQuarter, keySize);//plays C4
+		}
+}
 sbit light = P0^6;
 
 void main()
@@ -92,70 +119,67 @@ void main()
 	light = 0;
 	tempo = 60;
 	note_durr_factor  = (60*10000)/(32*tempo);
+
 	
 //	uart_init();
-	  
-	playSong(song1, durr1, song1Size, 1);
-
-	while (1)
-	{
-		
-	}
-
-/*	switch(mode)
+	
+	switch(mode)
 	{
 		case 0:
-			for(;;)
+		
+			while(1)
 			{
-				playSong1();
+					//playSong();
 				
-				if(!BUTTON7)
-				{//get out if the mode button is pressed
+				if (BUTTON7 == 0)//get out if the mode button is pressed
+				{
 					mode++;
 					break;
 				}
 			}
+		
 			break;
-			
-			case 1:
-				for(;;)
+		
+		
+		case 1:
+		{
+			while(1)
+			{
+					//playSong();
+				
+				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
-					playSong2();
-					
-					if(BUTTON7)
-					{//get out if the mode button is pressed
-						mode++;
-						break;
-					}
+					mode++;
+					break;
 				}
-			
-			case 2:
-				for(;;)
-				{
-					playSong3();
-					
-					if(BUTTON7)
-					{//get out if the mode button is pressed
-						mode++;
-						break;
-					}
-				}
-			default:
-				mode = 0;
+			}
 		}
-	
-	
-	}*/
+		case 2:
+		{
+			while(1)
+			{
+					keyboardMode();
+				
+				if (BUTTON7 == 0)//get out if the mode button is pressed
+				{
+					mode++;
+					break;
+				}
+			}
+		}
+			
+		default:
+			mode = 0;
+	}
 
-	return;
+	
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong)
 {
 	// Set up timer and interrupts
 	TMOD = 0x11;
 	IEN0 = IEN0 | 0x8A;
-	looping = loop;
 	currNote = 0;
 	songSize = sizeOfSong;
 	note_ptr = song;
