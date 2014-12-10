@@ -160,6 +160,31 @@ void main()
 				}
 			}
 		}
+		
+		case 3: //metronome mode
+			{
+			stopSong();
+			looping = 0;
+			playSong(key1, quarter, keySize);
+			while(1)
+			{	
+				if (BUTTON8 == 0)//slower metronome
+				{
+					tempo -= 5; 
+				}
+				if (BUTTON9 == 0)// faster metronome
+				{
+					tempo -= 5;
+				}
+				if (BUTTON7 == 0)//get out if the mode button is pressed
+				{
+					delay(100);
+					while (BUTTON7 == 0);
+					mode++;
+					break;
+				}
+			}
+		}
 			
 		default:
 			mode = 0;
