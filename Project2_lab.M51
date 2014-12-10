@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 BL51 BANKED LINKER/LOCATER V6.22                                                        12/10/2014  11:01:06  PAGE 1
+=======
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/10/2014  11:46:13  PAGE 1
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -40,6 +44,7 @@ LINK MAP OF MODULE:  Project2_lab (MAIN)
                     000EH     000DH                  *** GAP ***
             CODE    001BH     0003H     ABSOLUTE     
                     001EH     07E2H                  *** GAP ***
+<<<<<<< HEAD
             CODE    0800H     009AH     UNIT         ?PR?TIMER0_DURR?MAIN
             CODE    089AH     0094H     UNIT         ?C?LIB_CODE
             CODE    092EH     008CH     UNIT         ?C_C51STARTUP
@@ -48,6 +53,17 @@ LINK MAP OF MODULE:  Project2_lab (MAIN)
             CODE    0A71H     003DH     UNIT         ?PR?TIMER1_TONE?MAIN
             CODE    0AAEH     001BH     UNIT         ?CO?MAIN
             CODE    0AC9H     0006H     UNIT         ?C_INITSEG
+=======
+            CODE    0800H     00B3H     UNIT         ?PR?KEYBOARDMODE?MAIN
+            CODE    08B3H     0094H     UNIT         ?C?LIB_CODE
+            CODE    0947H     0093H     UNIT         ?PR?TIMER0_DURR?MAIN
+            CODE    09DAH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0A66H     006AH     UNIT         ?PR?_PLAYSONG?MAIN
+            CODE    0AD0H     004EH     UNIT         ?PR?MAIN?MAIN
+            CODE    0B1EH     003EH     UNIT         ?PR?TIMER1_TONE?MAIN
+            CODE    0B5CH     0023H     UNIT         ?CO?MAIN
+            CODE    0B7FH     0010H     UNIT         ?C_INITSEG
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
 
 
 
@@ -58,8 +74,12 @@ SEGMENT                          DATA_GROUP
   +--> CALLED SEGMENT          START    LENGTH
 ----------------------------------------------
 ?PR?TIMER1_TONE?MAIN           -----    -----
+<<<<<<< HEAD
   +--> ?CO?MAIN
 BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:01:06  PAGE 2
+=======
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:46:13  PAGE 2
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
 
 
 
@@ -75,6 +95,12 @@ SEGMENT                          DATA_GROUP
   +--> ?C_INITSEG
 
 ?PR?MAIN?MAIN                  -----    -----
+<<<<<<< HEAD
+=======
+  +--> ?PR?KEYBOARDMODE?MAIN
+
+?PR?KEYBOARDMODE?MAIN          -----    -----
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   +--> ?CO?MAIN
   +--> ?PR?_PLAYSONG?MAIN
 
@@ -90,14 +116,18 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0B72H         PUBLIC        key4
   D:0084H         PUBLIC        P0M1
+  C:0B73H         PUBLIC        key5
   D:0091H         PUBLIC        P1M1
   D:0085H         PUBLIC        P0M2
   D:0080H         PUBLIC        P0
+  C:0B74H         PUBLIC        key6
   D:0092H         PUBLIC        P1M2
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
+<<<<<<< HEAD
   C:0AC8H         PUBLIC        song1Size
   D:00A8H         PUBLIC        IEN0
   D:00E8H         PUBLIC        IEN1
@@ -112,11 +142,32 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   D:000BH         PUBLIC        note_durr_factor
   D:00B8H         PUBLIC        IP0
   D:000DH         PUBLIC        noteTime
+=======
+  C:0B7EH         PUBLIC        song1Size
+  D:00A8H         PUBLIC        IEN0
+  D:00E8H         PUBLIC        IEN1
+  B:0080H.6       PUBLIC        light
+  C:0AD0H         PUBLIC        main
+  D:0008H         PUBLIC        mode
+  D:0009H         PUBLIC        tempo
+  C:0B5CH         PUBLIC        notes
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:000AH         PUBLIC        note_durr_factor
+  C:0B6EH         PUBLIC        keyboardQuarter
+  D:00B8H         PUBLIC        IP0
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:46:13  PAGE 3
+
+
+  D:000CH         PUBLIC        noteTime
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   D:00C8H         PUBLIC        TCR20
   D:008CH         PUBLIC        TH0
   D:008DH         PUBLIC        TH1
   D:008AH         PUBLIC        TL0
   D:008BH         PUBLIC        TL1
+<<<<<<< HEAD
   C:09BAH         PUBLIC        _playSong
   B:0088H.4       PUBLIC        TR0
 BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:01:06  PAGE 3
@@ -133,9 +184,30 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   C:0AC4H         PUBLIC        durr1
   C:0800H         PUBLIC        timer0_durr
   D:0014H         PUBLIC        durr_ptr
+=======
+  C:0A66H         PUBLIC        _playSong
+  B:0088H.4       PUBLIC        TR0
+  D:000EH         PUBLIC        currNote
+  D:000FH         PUBLIC        songSize
+  B:0088H.6       PUBLIC        TR1
+  D:00D8H         PUBLIC        I2CON
+  C:0800H         PUBLIC        keyboardMode
+  C:0B75H         PUBLIC        keySize
+  C:0B76H         PUBLIC        song1
+  C:0B1EH         PUBLIC        timer1_tone
+  B:0090H.7       PUBLIC        speaker
+  D:0010H         PUBLIC        note_ptr
+  C:0B7AH         PUBLIC        durr1
+  C:0947H         PUBLIC        timer0_durr
+  D:0013H         PUBLIC        durr_ptr
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   D:00D0H         PUBLIC        PSW
+  C:0B6FH         PUBLIC        key1
   B:0020H.0       PUBLIC        looping
+  C:0B70H         PUBLIC        key2
+  C:0B71H         PUBLIC        key3
   -------         PROC          TIMER1_TONE
+<<<<<<< HEAD
   C:0A71H         LINE#         40
   C:0A7CH         LINE#         42
   C:0AA0H         LINE#         43
@@ -174,8 +246,77 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   C:088BH         LINE#         82
   C:088DH         LINE#         83
   C:088FH         LINE#         84
+=======
+  C:0B1EH         LINE#         42
+  C:0B29H         LINE#         44
+  C:0B4EH         LINE#         45
+  C:0B51H         LINE#         46
+  C:0B53H         LINE#         48
+  -------         ENDPROC       TIMER1_TONE
+  -------         PROC          TIMER0_DURR
+  C:0947H         LINE#         50
+  C:0954H         LINE#         52
+  C:095FH         LINE#         53
+  C:095FH         LINE#         54
+  C:0962H         LINE#         55
+  C:0965H         LINE#         56
+  C:096DH         LINE#         57
+  C:096FH         LINE#         59
+  C:096FH         LINE#         60
+  C:0976H         LINE#         61
+  C:0976H         LINE#         62
+  C:0979H         LINE#         63
+  C:097CH         LINE#         64
+  C:097CH         LINE#         65
+  C:097EH         LINE#         66
+  C:0980H         LINE#         67
+  C:0980H         LINE#         68
+  C:0982H         LINE#         70
+  C:0982H         LINE#         71
+  C:0984H         LINE#         72
+  C:0984H         LINE#         74
+  C:0987H         LINE#         75
+  C:098AH         LINE#         76
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:46:13  PAGE 4
+
+
+  C:09A7H         LINE#         77
+  C:09CCH         LINE#         78
+  C:09CFH         LINE#         79
+  C:09CFH         LINE#         80
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   -------         ENDPROC       TIMER0_DURR
+  -------         PROC          KEYBOARDMODE
+  C:0800H         LINE#         84
+  C:0800H         LINE#         85
+  C:0800H         LINE#         86
+  C:0806H         LINE#         87
+  C:0806H         LINE#         88
+  C:081FH         LINE#         89
+  C:081FH         LINE#         90
+  C:0823H         LINE#         91
+  C:0823H         LINE#         92
+  C:083CH         LINE#         93
+  C:083CH         LINE#         94
+  C:0840H         LINE#         95
+  C:0840H         LINE#         96
+  C:0859H         LINE#         97
+  C:0859H         LINE#         98
+  C:085DH         LINE#         99
+  C:085DH         LINE#         100
+  C:0876H         LINE#         101
+  C:0876H         LINE#         102
+  C:087AH         LINE#         103
+  C:087AH         LINE#         104
+  C:0893H         LINE#         105
+  C:0893H         LINE#         106
+  C:0899H         LINE#         107
+  C:0899H         LINE#         108
+  C:08B2H         LINE#         109
+  C:08B2H         LINE#         110
+  -------         ENDPROC       KEYBOARDMODE
   -------         PROC          MAIN
+<<<<<<< HEAD
   C:0A23H         LINE#         90
   C:0A23H         LINE#         91
   C:0A23H         LINE#         92
@@ -193,11 +334,65 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   C:0A6FH         LINE#         107
   C:0A6FH         LINE#         108
   C:0A6FH         LINE#         110
+=======
+  C:0AD0H         LINE#         113
+  C:0AD0H         LINE#         114
+  C:0AD0H         LINE#         115
+  C:0AD3H         LINE#         116
+  C:0AD5H         LINE#         117
+  C:0AD7H         LINE#         118
+  C:0AD9H         LINE#         119
+  C:0ADBH         LINE#         120
+  C:0ADEH         LINE#         121
+  C:0AF8H         LINE#         126
+  C:0B04H         LINE#         127
+  C:0B04H         LINE#         128
+  C:0B04H         LINE#         130
+  C:0B04H         LINE#         131
+  C:0B04H         LINE#         134
+  C:0B08H         LINE#         135
+  C:0B08H         LINE#         136
+  C:0B0AH         LINE#         137
+  C:0B0BH         LINE#         138
+  C:0B0BH         LINE#         139
+  C:0B0BH         LINE#         141
+  C:0B0BH         LINE#         144
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:46:13  PAGE 5
+
+
+  C:0B0BH         LINE#         145
+  C:0B0BH         LINE#         146
+  C:0B0BH         LINE#         147
+  C:0B0BH         LINE#         150
+  C:0B0FH         LINE#         151
+  C:0B0FH         LINE#         152
+  C:0B11H         LINE#         153
+  C:0B11H         LINE#         154
+  C:0B11H         LINE#         155
+  C:0B11H         LINE#         156
+  C:0B11H         LINE#         157
+  C:0B11H         LINE#         158
+  C:0B11H         LINE#         159
+  C:0B11H         LINE#         160
+  C:0B11H         LINE#         161
+  C:0B14H         LINE#         163
+  C:0B18H         LINE#         164
+  C:0B18H         LINE#         165
+  C:0B1AH         LINE#         166
+  C:0B1AH         LINE#         167
+  C:0B1AH         LINE#         168
+  C:0B1AH         LINE#         169
+  C:0B1AH         LINE#         171
+  C:0B1AH         LINE#         172
+  C:0B1DH         LINE#         173
+  C:0B1DH         LINE#         176
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   -------         ENDPROC       MAIN
   -------         PROC          _PLAYSONG
   D:0001H         SYMBOL        song
   D:0024H         SYMBOL        durr
   D:0027H         SYMBOL        sizeOfSong
+<<<<<<< HEAD
   C:09BAH         LINE#         160
   C:09BAH         LINE#         161
   C:09BAH         LINE#         163
@@ -214,24 +409,61 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   C:0A1EH         LINE#         176
   C:0A20H         LINE#         177
   C:0A22H         LINE#         178
+=======
+  C:0A66H         LINE#         178
+  C:0A66H         LINE#         179
+  C:0A66H         LINE#         181
+  C:0A69H         LINE#         182
+  C:0A6CH         LINE#         183
+  C:0A6FH         LINE#         184
+  C:0A72H         LINE#         185
+  C:0A78H         LINE#         186
+  C:0A81H         LINE#         188
+  C:0A84H         LINE#         189
+  C:0A87H         LINE#         190
+  C:0AA3H         LINE#         191
+  C:0AC8H         LINE#         192
+  C:0ACBH         LINE#         194
+  C:0ACDH         LINE#         195
+  C:0ACFH         LINE#         196
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   -------         ENDPROC       _PLAYSONG
   -------         ENDMOD        MAIN
 
   -------         MODULE        ?C?CLDOPTR
+<<<<<<< HEAD
   C:089AH         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
   -------         MODULE        ?C?IMUL
   C:08C7H         PUBLIC        ?C?IMUL
+=======
+  C:08B3H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?IMUL
+  C:08E0H         PUBLIC        ?C?IMUL
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   -------         ENDMOD        ?C?IMUL
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:46:13  PAGE 6
+
+
 
   -------         MODULE        ?C?UIDIV
+<<<<<<< HEAD
   C:08D9H         PUBLIC        ?C?UIDIV
+=======
+  C:08F2H         PUBLIC        ?C?UIDIV
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
   -------         ENDMOD        ?C?UIDIV
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01B4H BYTE (21%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0274H BYTE (30%) *
 ******************************************************************************
 
+<<<<<<< HEAD
 Program Size: data=39.1 xdata=0 code=728
+=======
+Program Size: data=38.1 xdata=0 code=920
+>>>>>>> bb0cbe589f5e4825bdbccd3faba2db317f614cce
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

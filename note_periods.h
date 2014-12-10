@@ -24,6 +24,16 @@
 
 code unsigned int notes[] = {0,C4,D4,E4,F4,G4,A4,B4,C5};
 
+//only relevant for the keyboard function
+code unsigned char keyboardQuarter[] = {8};
+code unsigned char key1[] = {1};//C4
+code unsigned char key2[] = {2};//D4
+code unsigned char key3[] = {3};//E4
+code unsigned char key4[] = {4};//F4
+code unsigned char key5[] = {5};//G4
+code unsigned char key6[] = {6};//A4
+code unsigned char keySize = 1;
+
 code unsigned char song1[] = {1,3,5,8};
 code unsigned char durr1[] = {32,32,128,32};
 code unsigned char song1Size = 4;
