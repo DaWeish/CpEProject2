@@ -9,15 +9,15 @@
 #define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
 
 //DEFINE all buttons(labeled top left horizantally to buttom right)
-#define BUTTON1 P2^0
-#define BUTTON2 P0^1
-#define BUTTON3 P2^3
-#define BUTTON4 P0^2
-#define BUTTON5 P1^4
-#define BUTTON6 P0^0
+sbit BUTTON1 = P2^0;
+sbit BUTTON2 = P0^1;
+sbit BUTTON3 = P2^3;
+sbit BUTTON4 = P0^2;
+sbit BUTTON5 = P1^4;
+sbit BUTTON6 = P0^0;
 sbit BUTTON7 = P2^1;//#define BUTTON7 P2^1
-#define BUTTON8 P0^3
-#define BUTTON9 P2^2
+sbit BUTTON8 = P0^3;
+sbit BUTTON9 = P2^2;
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
@@ -36,8 +36,6 @@ unsigned char songSize;
 unsigned char currNote;
 
 unsigned char mode;
-
-sbit light = P0^6;
 	
 void timer1_tone(void) interrupt 3 using 3
 {
@@ -102,7 +100,6 @@ void main()
 	P2M2 = 0x00;
 	looping = 1;
 	
-	light = 1;
 	mode = 0;
 	
 	tempo = 60;
@@ -152,11 +149,10 @@ void main()
 		}
 		case 2:
 		{
-			stopSong();
-			playSong(key2, quarter, keySize);
-
 			while(1)
-			{		
+			{	
+				keyboardMode();
+
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
 					delay(10);
@@ -202,7 +198,6 @@ void stopSong()
 void delay(unsigned int count)
 {
   unsigned int i;
-  light = 0;
   for (i = 0; i < 100*count; i++);
 }
 
@@ -210,26 +205,38 @@ void keyboardMode(void)
 {
 	if(BUTTON1 == 0)
 	{
+		delay(10);
+		while (BUTTON1 == 0);
 		playSong(key1,quarter, keySize);//plays C4
 	}
 	if(BUTTON2 == 0)
 	{
+		delay(10);
+		while (BUTTON2 == 0);
 		playSong(key2,quarter, keySize);//plays C4
 	}
 	if(BUTTON3 == 0)
 	{
+		delay(10);
+		while (BUTTON3 == 0);
 		playSong(key3,quarter, keySize);//plays C4
 	}
 	if(BUTTON4 == 0)
 	{
+		delay(10);
+		while (BUTTON4 == 0);
 		playSong(key4,quarter, keySize);//plays C4
 	}
 	if(BUTTON5 == 0)
 	{
+		delay(10);
+		while (BUTTON5 == 0);
 		playSong(key5,quarter, keySize);//plays C4
 	}
 	if(BUTTON6 == 0)
 	{
+		delay(10);
+		while (BUTTON6 == 0);
 		playSong(key6,quarter, keySize);//plays C4
 	}
 }
