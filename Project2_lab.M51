@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/10/2014  10:53:28  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/10/2014  11:01:06  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -47,7 +47,7 @@ LINK MAP OF MODULE:  Project2_lab (MAIN)
             CODE    0A23H     004EH     UNIT         ?PR?MAIN?MAIN
             CODE    0A71H     003DH     UNIT         ?PR?TIMER1_TONE?MAIN
             CODE    0AAEH     001BH     UNIT         ?CO?MAIN
-            CODE    0AC9H     0010H     UNIT         ?C_INITSEG
+            CODE    0AC9H     0006H     UNIT         ?C_INITSEG
 
 
 
@@ -59,7 +59,7 @@ SEGMENT                          DATA_GROUP
 ----------------------------------------------
 ?PR?TIMER1_TONE?MAIN           -----    -----
   +--> ?CO?MAIN
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  10:53:28  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:01:06  PAGE 2
 
 
 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   D:008BH         PUBLIC        TL1
   C:09BAH         PUBLIC        _playSong
   B:0088H.4       PUBLIC        TR0
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  10:53:28  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:01:06  PAGE 3
 
 
   D:000FH         PUBLIC        currNote
@@ -136,84 +136,84 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   D:00D0H         PUBLIC        PSW
   B:0020H.0       PUBLIC        looping
   -------         PROC          TIMER1_TONE
-  C:0A71H         LINE#         41
-  C:0A7CH         LINE#         43
-  C:0AA0H         LINE#         44
-  C:0AA3H         LINE#         45
-  C:0AA5H         LINE#         47
+  C:0A71H         LINE#         40
+  C:0A7CH         LINE#         42
+  C:0AA0H         LINE#         43
+  C:0AA3H         LINE#         44
+  C:0AA5H         LINE#         46
   -------         ENDPROC       TIMER1_TONE
   -------         PROC          TIMER0_DURR
-  C:0800H         LINE#         49
-  C:080DH         LINE#         51
-  C:080FH         LINE#         52
-  C:0811H         LINE#         54
+  C:0800H         LINE#         48
+  C:080DH         LINE#         50
+  C:080FH         LINE#         51
+  C:0811H         LINE#         53
+  C:081CH         LINE#         54
   C:081CH         LINE#         55
-  C:081CH         LINE#         56
-  C:081FH         LINE#         57
-  C:0822H         LINE#         58
-  C:082AH         LINE#         59
+  C:081FH         LINE#         56
+  C:0822H         LINE#         57
+  C:082AH         LINE#         58
+  C:082CH         LINE#         60
   C:082CH         LINE#         61
-  C:082CH         LINE#         62
+  C:0833H         LINE#         62
   C:0833H         LINE#         63
-  C:0833H         LINE#         64
-  C:0836H         LINE#         65
+  C:0836H         LINE#         64
+  C:0839H         LINE#         65
   C:0839H         LINE#         66
-  C:0839H         LINE#         67
-  C:083BH         LINE#         68
+  C:083BH         LINE#         67
+  C:083DH         LINE#         68
   C:083DH         LINE#         69
-  C:083DH         LINE#         70
+  C:083FH         LINE#         71
   C:083FH         LINE#         72
-  C:083FH         LINE#         73
-  C:0841H         LINE#         74
-  C:0841H         LINE#         76
-  C:0844H         LINE#         77
-  C:0847H         LINE#         78
-  C:0864H         LINE#         79
-  C:0888H         LINE#         80
-  C:088BH         LINE#         81
-  C:088BH         LINE#         83
-  C:088DH         LINE#         84
-  C:088FH         LINE#         85
+  C:0841H         LINE#         73
+  C:0841H         LINE#         75
+  C:0844H         LINE#         76
+  C:0847H         LINE#         77
+  C:0864H         LINE#         78
+  C:0888H         LINE#         79
+  C:088BH         LINE#         80
+  C:088BH         LINE#         82
+  C:088DH         LINE#         83
+  C:088FH         LINE#         84
   -------         ENDPROC       TIMER0_DURR
   -------         PROC          MAIN
+  C:0A23H         LINE#         90
   C:0A23H         LINE#         91
   C:0A23H         LINE#         92
-  C:0A23H         LINE#         93
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  10:53:28  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/10/2014  11:01:06  PAGE 4
 
 
-  C:0A26H         LINE#         94
-  C:0A28H         LINE#         95
-  C:0A2AH         LINE#         96
-  C:0A2CH         LINE#         97
-  C:0A2EH         LINE#         99
-  C:0A30H         LINE#         101
-  C:0A35H         LINE#         102
-  C:0A56H         LINE#         106
+  C:0A26H         LINE#         93
+  C:0A28H         LINE#         94
+  C:0A2AH         LINE#         95
+  C:0A2CH         LINE#         96
+  C:0A2EH         LINE#         98
+  C:0A30H         LINE#         100
+  C:0A35H         LINE#         101
+  C:0A56H         LINE#         105
+  C:0A6FH         LINE#         107
   C:0A6FH         LINE#         108
-  C:0A6FH         LINE#         109
-  C:0A6FH         LINE#         111
+  C:0A6FH         LINE#         110
   -------         ENDPROC       MAIN
   -------         PROC          _PLAYSONG
   D:0001H         SYMBOL        song
   D:0024H         SYMBOL        durr
   D:0027H         SYMBOL        sizeOfSong
+  C:09BAH         LINE#         160
   C:09BAH         LINE#         161
-  C:09BAH         LINE#         162
-  C:09BAH         LINE#         164
-  C:09BDH         LINE#         165
-  C:09C0H         LINE#         166
-  C:09C3H         LINE#         167
-  C:09C6H         LINE#         168
-  C:09CCH         LINE#         169
-  C:09D5H         LINE#         171
-  C:09D8H         LINE#         172
-  C:09DBH         LINE#         173
-  C:09F7H         LINE#         174
-  C:0A1BH         LINE#         175
-  C:0A1EH         LINE#         177
-  C:0A20H         LINE#         178
-  C:0A22H         LINE#         179
+  C:09BAH         LINE#         163
+  C:09BDH         LINE#         164
+  C:09C0H         LINE#         165
+  C:09C3H         LINE#         166
+  C:09C6H         LINE#         167
+  C:09CCH         LINE#         168
+  C:09D5H         LINE#         170
+  C:09D8H         LINE#         171
+  C:09DBH         LINE#         172
+  C:09F7H         LINE#         173
+  C:0A1BH         LINE#         174
+  C:0A1EH         LINE#         176
+  C:0A20H         LINE#         177
+  C:0A22H         LINE#         178
   -------         ENDPROC       _PLAYSONG
   -------         ENDMOD        MAIN
 
@@ -230,8 +230,8 @@ SYMBOL TABLE OF MODULE:  Project2_lab (MAIN)
   -------         ENDMOD        ?C?UIDIV
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01BEH BYTE (21%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01B4H BYTE (21%) *
 ******************************************************************************
 
-Program Size: data=39.1 xdata=0 code=738
+Program Size: data=39.1 xdata=0 code=728
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -23,6 +23,7 @@
 // Note duration is specified in 32nd notes
 unsigned int tempo;
 unsigned int note_durr_factor;
+unsigned int noteTime;
 
 sbit speaker = P1^7;
 
@@ -31,10 +32,8 @@ bit looping = 0;
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
 
-unsigned char songSize = 0;
-unsigned char currNote = 0;
-
-unsigned int noteTime = 0;
+unsigned char songSize;
+unsigned char currNote;
 
 unsigned char mode = 0;
 	
