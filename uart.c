@@ -14,7 +14,7 @@ GENERATED: On "Jun 24 2003" at "10:17:56" by Code Architect 2.01
 ***********************************************************************/
 
 // SFR description needs to be included
-#include <reg932.h>
+#include "reg932.h"
 #include "uart.h"
 
 // flag that indicates if the UART is busy transmitting or not
