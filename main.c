@@ -208,28 +208,28 @@ void delay(unsigned int count)
 
 void keyboardMode(void)
 {
-		if(BUTTON1 == 0)
-		{
-			playSong(key1,quarter, keySize);//plays C4
-		}
-		if(BUTTON2 == 0)
-		{
-			playSong(key2,quarter, keySize);//plays C4
-		}
-		if(BUTTON3 == 0)
-		{
-			playSong(key3,quarter, keySize);//plays C4
-		}
-		if(BUTTON4 == 0)
-		{
-			playSong(key4,quarter, keySize);//plays C4
-		}
-		if(BUTTON5 == 0)
-		{
-			playSong(key5,quarter, keySize);//plays C4
-		}
-		if(BUTTON6 == 0)
-		{
-			playSong(key6,quarter, keySize);//plays C4
-		}
+	if(BUTTON1 == 0)
+	{
+		playSong(key1,quarter, keySize);//plays C4
+	}
+	if(BUTTON2 == 0)
+	{
+		playSong(key2,quarter, keySize);//plays C4
+	}
+	if(BUTTON3 == 0)
+	{
+		playSong(key3,quarter, keySize);//plays C4
+	}
+	if(BUTTON4 == 0)
+	{
+		playSong(key4,quarter, keySize);//plays C4
+	}
+	if(BUTTON5 == 0)
+	{
+		playSong(key5,quarter, keySize);//plays C4
+	}
+	if(BUTTON6 == 0)
+	{
+		playSong(key6,quarter, keySize);//plays C4
+	}
 }
