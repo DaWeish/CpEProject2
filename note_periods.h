@@ -3,6 +3,13 @@
 
 #define CLOCK	7372800
 
+//note length
+#define sixteenth 2
+#define eighth 4
+#define quarter 8
+#define half 16
+#define whole 32
+
 #define E3		((CLOCK/4)/164.81)
 #define F3		((CLOCK/4)/174.61)
 #define G3		((CLOCK/4)/196.00)
@@ -56,8 +63,8 @@ code unsigned int notes[] =
 	C5,Db6,D6,Eb6,E6,F6,Gb6,G6,Ab6,A6,Bb6,B6,
 	C6,Db7,D7};
 
+
 //only relevant for the keyboard function
-code unsigned char quarter[] = {32};
 code unsigned char key1[] = {8};//C4
 code unsigned char key2[] = {10};//D4
 code unsigned char key3[] = {12};//E4
