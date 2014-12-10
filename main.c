@@ -83,6 +83,7 @@ void timer0_durr(void) interrupt 1 using 3
 	TR1 = 1;
 }
 
+void stopSong(); // stops both timers
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
 
 sbit light = P0^6;
@@ -177,4 +178,8 @@ void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong
 	TR1 = 1;
 }
 
-
+void stopSong()
+{
+	TR0 = 0;
+	TR1 = 0;
+}
