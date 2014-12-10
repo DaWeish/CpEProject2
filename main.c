@@ -77,6 +77,15 @@ void timer0_durr(void) interrupt 1 using 3
 		noteTime = note_durr_factor * durr_ptr[currNote];
 		TH1 = notes[note_ptr[currNote]] >> 8;
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
+		
+		if (notes[note_ptr[currNote]] == 0)
+		{
+			TR1 = 0;
+		}
+		else
+		{
+			TR1 = 1;
+		}
 	}
 
 	return;
@@ -87,6 +96,7 @@ void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong
 void keyboardMode(void);
 void delay(unsigned int count);
 void transmitText(unsigned char* text, unsigned char size);
+void updateTempo(); // call after changing tempo
 
 void main()
 {
@@ -100,7 +110,7 @@ void main()
 	mode = 0;
 	
 	tempo = 60;
-	note_durr_factor  = 60*((10000/tempo)/32); //312
+	updateTempo();
 
 	//initialize UART
 	uart_init();
@@ -120,7 +130,7 @@ void main()
 				  delay(100);
 					while (BUTTON7 == 0);
 					mode++;
-					stopSong();
+					stopSong(); // Call to stop song since looping is True
 					break;
 				}
 			}
@@ -167,10 +177,12 @@ void main()
 				if (BUTTON8 == 0)//slower metronome
 				{
 					tempo -= 5; 
+					updateTempo();
 				}
 				if (BUTTON9 == 0)// faster metronome
 				{
 					tempo += 5;
+					updateTempo();
 				}
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
@@ -193,7 +205,7 @@ void main()
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
 {
 	looping = loop;
-	// Set up timer and interrupts
+	// Set up timers and interrupts
 	TMOD = 0x11;
 	IEN0 = IEN0 | 0x8A;
 	currNote = 0;
@@ -208,7 +220,21 @@ void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong
 	TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	
 	TR0 = 1;
-	TR1 = 1;
+//TR1 = 1;
+	
+	if (notes[note_ptr[currNote]] == 0)
+	{
+		TR1 = 0;
+	}
+	else
+	{
+		TR1 = 1;
+	}
+}
+
+void updateTempo()
+{
+	note_durr_factor  = 60*((10000/tempo)/32); //312 for 60 bpm
 }
 
 void stopSong()

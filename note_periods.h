@@ -74,6 +74,7 @@ code unsigned int notes[] =
 //45  46 47
 	C7,Db7,D7};
 
+
 //only relevant for the keyboard function
 code unsigned char key1[] = {8};//C4
 code unsigned char key2[] = {10};//D4
