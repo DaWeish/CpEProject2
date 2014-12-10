@@ -8,22 +8,21 @@
 #define TICK_HIGH 0xfe
 #define TICK_LOW 0x8f
 
+//DEFINE all buttons(labeled top left horizantally to buttom right)
+#define BUTTON1 P2^0;
+#define BUTTON2 P0^1;
+#define BUTTON3 P2^3;
+#define BUTTON4 P0^2;
+#define BUTTON5 P1^4;
+#define BUTTON6 P0^0;
+#define BUTTON7 P2^1;
+#define BUTTON8 P0^3;
+#define BUTTON9 P2^2;
+
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
 unsigned char tempo;
 unsigned int note_durr_factor;
-
-
-//DEFINE all buttons(labeled top left horizantally to buttom right)
-sbit B1 P2^0;
-sbit B2 P0^1;
-sbit B3 P2^3;
-sbit B4 P0^2;
-sbit B5 P1^4;
-sbit B6 P0^0;
-sbit B7 P2^1;
-sbit B8 P0^3;
-sbit B9 P2^2;
 
 sbit speaker = P1^7;
 
@@ -36,10 +35,6 @@ unsigned char currNote = 0;
 unsigned int noteTime = 0;
 
 unsigned char mode = 0;
-
-void ModeInterupt(void) interupt 1;
-
-void timer1_tone(void) interrupt 3 using 3;
 
 bit looping = 0;
 	
@@ -94,17 +89,16 @@ void main()
 	
 	playSong(song1, durr1, song1Size, 1);
 
-	switch(mode)
+/*	switch(mode)
 	{
 		case 0:
 			for(;;)
 			{
 				playSong1();
 				
-				if(B7)
+				if(!BUTTON7)
 				{//get out if the mode button is pressed
 					mode++;
-					B7 = 0; //clear the button
 					break;
 				}
 			}
@@ -115,10 +109,9 @@ void main()
 				{
 					playSong2();
 					
-					if(B7)
+					if(BUTTON7)
 					{//get out if the mode button is pressed
 						mode++;
-						B7 = 0; //clear the button
 						break;
 					}
 				}
@@ -128,10 +121,9 @@ void main()
 				{
 					playSong3();
 					
-					if(B7)
+					if(BUTTON7)
 					{//get out if the mode button is pressed
 						mode++;
-						B7 = 0; //clear the button
 						break;
 					}
 				}
@@ -140,21 +132,9 @@ void main()
 		}
 	
 	
-	}
+	}*/
 
 	return;
-}
-
-
-
-void timer1_tone(void) interrupt 3 using 3
-{
-	tempo = 60;
-	note_durr_factor  = (60*10000)/(32*tempo);
-	
-	uart_init();
-	
-	playSong(song1, durr1, song1Size, 1);
 }
 
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)

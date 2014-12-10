@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:30:59 PAGE 1   
+C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:46:32 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE MAIN
@@ -17,106 +17,169 @@ line level    source
    8          #define TICK_HIGH 0xfe
    9          #define TICK_LOW 0x8f
   10          
-  11          // Tempo is beats per minute
-  12          // Note duration is specified in 32nd notes
-  13          unsigned char tempo;
-  14          unsigned int note_durr_factor;
-  15          
-  16          sbit speaker = P1^7;
-  17          
-  18          unsigned char* note_ptr;
-  19          unsigned char* durr_ptr;
-  20          
-  21          unsigned char songSize = 0;
-  22          unsigned char currNote = 0;
-  23          
-  24          unsigned int noteTime = 0;
-  25          
-  26          bit looping = 0;
-  27            
-  28          void timer1_tone(void) interrupt 3 using 3
-  29          {
-  30   1        TH1 = notes[note_ptr[currNote]] >> 8;
-  31   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
-  32   1        speaker = ~speaker;
-  33   1      }
-  34            
-  35          void timer0_durr(void) interrupt 1 using 3 
-  36          {
-  37   1        if (noteTime > 0) // still playing the note, reset timer
-  38   1        {
-  39   2          TH0 = -(TICK_HIGH);
-  40   2          TL0 = -(TICK_LOW);
-  41   2          noteTime--;
-  42   2        }
-  43   1        else
-  44   1        {
-  45   2          if (currNote >= songSize)
-  46   2          {
-  47   3            currNote = 0;
-  48   3            if (!looping)
-  49   3            {
-  50   4              TR1 = 0;
-  51   4              TR0 = 0;
-  52   4            }
-  53   3          }
-  54   2          else
-  55   2          {
-C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:30:59 PAGE 2   
+  11          //DEFINE all buttons(labeled top left horizantally to buttom right)
+  12          #define BUTTON1 P2^0;
+  13          #define BUTTON2 P0^1;
+  14          #define BUTTON3 P2^3;
+  15          #define BUTTON4 P0^2;
+  16          #define BUTTON5 P1^4;
+  17          #define BUTTON6 P0^0;
+  18          #define BUTTON7 P2^1;
+  19          #define BUTTON8 P0^3;
+  20          #define BUTTON9 P2^2;
+  21          
+  22          // Tempo is beats per minute
+  23          // Note duration is specified in 32nd notes
+  24          unsigned char tempo;
+  25          unsigned int note_durr_factor;
+  26          
+  27          sbit speaker = P1^7;
+  28          
+  29          unsigned char* note_ptr;
+  30          unsigned char* durr_ptr;
+  31          
+  32          unsigned char songSize = 0;
+  33          unsigned char currNote = 0;
+  34          
+  35          unsigned int noteTime = 0;
+  36          
+  37          unsigned char mode = 0;
+  38          
+  39          bit looping = 0;
+  40            
+  41          void timer1_tone(void) interrupt 3 using 3
+  42          {
+  43   1        TH1 = notes[note_ptr[currNote]] >> 8;
+  44   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
+  45   1        speaker = ~speaker;
+  46   1      }
+  47            
+  48          void timer0_durr(void) interrupt 1 using 3 
+  49          {
+  50   1        if (noteTime > 0) // still playing the note, reset timer
+  51   1        {
+  52   2          TH0 = -(TICK_HIGH);
+  53   2          TL0 = -(TICK_LOW);
+  54   2          noteTime--;
+  55   2        }
+C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:46:32 PAGE 2   
 
-  56   3            currNote++;
-  57   3          }
-  58   2          
-  59   2          TH0 = -(TICK_HIGH);
-  60   2          TL0 = -(TICK_LOW);
-  61   2          noteTime = note_durr_factor * durr_ptr[currNote];
-  62   2          TH1 = notes[note_ptr[currNote]] >> 8;
-  63   2          TL1 = notes[note_ptr[currNote]] & 0x00ff;
-  64   2        }
-  65   1      }
-  66          
-  67          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
-  68          
-  69          void main()
-  70          {
-  71   1        tempo = 60;
-  72   1        note_durr_factor  = (60*10000)/(32*tempo);
-  73   1        
-  74   1        uart_init();
-  75   1        
-  76   1        playSong(song1, durr1, song1Size, 1);
-  77   1      }
-  78          
-  79          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
-  80          {
-  81   1        // Set up timer and interrupts
-  82   1        TMOD = 0x11;
-  83   1        IEN0 = IEN0 | 0x8A;
-  84   1        looping = loop;
-  85   1        currNote = 0;
-  86   1        songSize = sizeOfSong;
-  87   1        note_ptr = song;
-  88   1        durr_ptr = durr;
+  56   1        else
+  57   1        {
+  58   2          if (currNote >= songSize)
+  59   2          {
+  60   3            currNote = 0;
+  61   3            if (!looping)
+  62   3            {
+  63   4              TR1 = 0;
+  64   4              TR0 = 0;
+  65   4            }
+  66   3          }
+  67   2          else
+  68   2          {
+  69   3            currNote++;
+  70   3          }
+  71   2          
+  72   2          TH0 = -(TICK_HIGH);
+  73   2          TL0 = -(TICK_LOW);
+  74   2          noteTime = note_durr_factor * durr_ptr[currNote];
+  75   2          TH1 = notes[note_ptr[currNote]] >> 8;
+  76   2          TL1 = notes[note_ptr[currNote]] & 0x00ff;
+  77   2        }
+  78   1      }
+  79          
+  80          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
+  81          
+  82          void main()
+  83          {
+  84   1      
+  85   1        tempo = 60;
+  86   1        note_durr_factor  = (60*10000)/(32*tempo);
+  87   1        
+  88   1        uart_init();
   89   1        
-  90   1        TH0 = -(TICK_HIGH);
-  91   1        TL0 = -(TICK_LOW);
-  92   1        noteTime = note_durr_factor * durr_ptr[currNote];
-  93   1        TH1 = notes[note_ptr[currNote]] >> 8;
-  94   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
-  95   1        
-  96   1        TR0 = 1;
-  97   1        TR1 = 1;
-  98   1      }
-  99          
- 100          
+  90   1        playSong(song1, durr1, song1Size, 1);
+  91   1      
+  92   1      /*  switch(mode)
+  93   1        {
+  94   1          case 0:
+  95   1            for(;;)
+  96   1            {
+  97   1              playSong1();
+  98   1              
+  99   1              if(!BUTTON7)
+ 100   1              {//get out if the mode button is pressed
+ 101   1                mode++;
+ 102   1                break;
+ 103   1              }
+ 104   1            }
+ 105   1            break;
+ 106   1            
+ 107   1            case 1:
+ 108   1              for(;;)
+ 109   1              {
+ 110   1                playSong2();
+ 111   1                
+ 112   1                if(BUTTON7)
+ 113   1                {//get out if the mode button is pressed
+ 114   1                  mode++;
+ 115   1                  break;
+ 116   1                }
+ 117   1              }
+C51 COMPILER V9.53.0.0   MAIN                                                              12/09/2014 19:46:32 PAGE 3   
+
+ 118   1            
+ 119   1            case 2:
+ 120   1              for(;;)
+ 121   1              {
+ 122   1                playSong3();
+ 123   1                
+ 124   1                if(BUTTON7)
+ 125   1                {//get out if the mode button is pressed
+ 126   1                  mode++;
+ 127   1                  break;
+ 128   1                }
+ 129   1              }
+ 130   1            default:
+ 131   1              mode = 0;
+ 132   1          }
+ 133   1        
+ 134   1        
+ 135   1        }*/
+ 136   1      
+ 137   1        return;
+ 138   1      }
+ 139          
+ 140          void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
+ 141          {
+ 142   1        // Set up timer and interrupts
+ 143   1        TMOD = 0x11;
+ 144   1        IEN0 = IEN0 | 0x8A;
+ 145   1        looping = loop;
+ 146   1        currNote = 0;
+ 147   1        songSize = sizeOfSong;
+ 148   1        note_ptr = song;
+ 149   1        durr_ptr = durr;
+ 150   1        
+ 151   1        TH0 = -(TICK_HIGH);
+ 152   1        TL0 = -(TICK_LOW);
+ 153   1        noteTime = note_durr_factor * durr_ptr[currNote];
+ 154   1        TH1 = notes[note_ptr[currNote]] >> 8;
+ 155   1        TL1 = notes[note_ptr[currNote]] & 0x00ff;
+ 156   1        
+ 157   1        TR0 = 1;
+ 158   1        TR1 = 1;
+ 159   1      }
+ 160          
+ 161          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    378    ----
+   CODE SIZE        =    379    ----
    CONSTANT SIZE    =     27    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     13       7
+   DATA SIZE        =     14       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =      1       1
 END OF MODULE INFORMATION.

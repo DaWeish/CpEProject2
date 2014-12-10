@@ -1345,18 +1345,18 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\main.c</Name>
-        <ColumnNumber>10</ColumnNumber>
-        <TopLine>58</TopLine>
-        <CurrentLine>97</CurrentLine>
+        <ColumnNumber>23</ColumnNumber>
+        <TopLine>25</TopLine>
+        <CurrentLine>37</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
         <Name>reg932.h</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>7</TopLine>
-        <CurrentLine>209</CurrentLine>
+        <ColumnNumber>21</ColumnNumber>
+        <TopLine>131</TopLine>
+        <CurrentLine>225</CurrentLine>
         <Folding>0</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
