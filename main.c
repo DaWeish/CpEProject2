@@ -82,6 +82,7 @@ void timer0_durr(void) interrupt 1 using 3
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
 
 sbit light = P0^6;
+
 void main()
 {
 	P0M1 = 0x00;

@@ -1,1 +1,3 @@
-*.bak
+*.LST
+*.OBJ
+*.build_log.htm
