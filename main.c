@@ -15,7 +15,7 @@
 #define BUTTON4 P0^2
 #define BUTTON5 P1^4
 #define BUTTON6 P0^0
-#define BUTTON7 P2^1
+sbit BUTTON7 = P2^1;//#define BUTTON7 P2^1
 #define BUTTON8 P0^3
 #define BUTTON9 P2^2
 
@@ -35,7 +35,9 @@ unsigned char* durr_ptr;
 unsigned char songSize;
 unsigned char currNote;
 
-unsigned char mode = 0;
+unsigned char mode;
+
+sbit light = P0^6;
 	
 void timer1_tone(void) interrupt 3 using 3
 {
@@ -43,13 +45,14 @@ void timer1_tone(void) interrupt 3 using 3
 	TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	speaker = ~speaker;
 
+	return;
 }
 	
 void timer0_durr(void) interrupt 1 using 3 
-{
-	TR1 = 0; // stop timers while function runs
+{	
+	TR1 = 0;
 	TR0 = 0;
-	
+
 	if (noteTime > 0) // still playing the note, reset timer
 	{
 		TH0 = TICK_HIGH;
@@ -78,42 +81,16 @@ void timer0_durr(void) interrupt 1 using 3
 		TH1 = notes[note_ptr[currNote]] >> 8;
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	}
-	
-	TR0 = 1;
-	TR1 = 1;
+
+	TH0 = 1;
+	TH1 = 1;
+	return;
 }
 
 void stopSong(); // stops both timers
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
-
-void keyboardMode(void)
-{
-		if(BUTTON1 == 0)
-		{
-			playSong(key1,keyboardQuarter, keySize);//plays C4
-		}
-		if(BUTTON2 == 0)
-		{
-			playSong(key2,keyboardQuarter, keySize);//plays C4
-		}
-		if(BUTTON3 == 0)
-		{
-			playSong(key3,keyboardQuarter, keySize);//plays C4
-		}
-		if(BUTTON4 == 0)
-		{
-			playSong(key4,keyboardQuarter, keySize);//plays C4
-		}
-		if(BUTTON5 == 0)
-		{
-			playSong(key5,keyboardQuarter, keySize);//plays C4
-		}
-		if(BUTTON6 == 0)
-		{
-			playSong(key6,keyboardQuarter, keySize);//plays C4
-		}
-}
-sbit light = P0^6;
+void keyboardMode(void);
+void delay(unsigned int count);
 
 void main()
 {
@@ -121,33 +98,34 @@ void main()
 	P0M2 = 0x00;
 	P1M1 = 0x00;
 	P1M2 = 0x00;
+	P2M1 = 0x00;
+	P2M2 = 0x00;
 	looping = 1;
 	
-	light = 0;
+	light = 1;
+	mode = 0;
 	
 	tempo = 60;
 	note_durr_factor  = 60*((10000/tempo)/32); //312
 	
 //	uart_init();
 	  
-	playSong(song1, durr1, song1Size);
-
-	while (1)
+//	playSong(song1, durr1, song1Size);	    // Plays test scale
+	while (1) 
 	{
-		
-	}
-
-
-/*	switch(mode)
+	switch(mode)
 	{
 		case 0:
 		
+			stopSong();
+			playSong(song1, durr1, song1Size);
+
 			while(1)
 			{
-					//playSong();
-				
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
+				    delay(10);
+					while (BUTTON7 == 0);
 					mode++;
 					break;
 				}
@@ -158,12 +136,15 @@ void main()
 		
 		case 1:
 		{
+			stopSong();
+			playSong(key1, quarter, keySize);
+
 			while(1)
 			{
-					//playSong();
-				
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
+					delay(10);
+					while (BUTTON7 == 0);
 					mode++;
 					break;
 				}
@@ -171,12 +152,15 @@ void main()
 		}
 		case 2:
 		{
+			stopSong();
+			playSong(key2, quarter, keySize);
+
 			while(1)
-			{
-					keyboardMode();
-				
+			{		
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
+					delay(10);
+					while (BUTTON7 == 0);
 					mode++;
 					break;
 				}
@@ -186,8 +170,7 @@ void main()
 		default:
 			mode = 0;
 	}
-*/
-	
+	}
 }
 
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong)
@@ -214,4 +197,39 @@ void stopSong()
 {
 	TR0 = 0;
 	TR1 = 0;
+}
+
+void delay(unsigned int count)
+{
+  unsigned int i;
+  light = 0;
+  for (i = 0; i < 100*count; i++);
+}
+
+void keyboardMode(void)
+{
+		if(BUTTON1 == 0)
+		{
+			playSong(key1,quarter, keySize);//plays C4
+		}
+		if(BUTTON2 == 0)
+		{
+			playSong(key2,quarter, keySize);//plays C4
+		}
+		if(BUTTON3 == 0)
+		{
+			playSong(key3,quarter, keySize);//plays C4
+		}
+		if(BUTTON4 == 0)
+		{
+			playSong(key4,quarter, keySize);//plays C4
+		}
+		if(BUTTON5 == 0)
+		{
+			playSong(key5,quarter, keySize);//plays C4
+		}
+		if(BUTTON6 == 0)
+		{
+			playSong(key6,quarter, keySize);//plays C4
+		}
 }
