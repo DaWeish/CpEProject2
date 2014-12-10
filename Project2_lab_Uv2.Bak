@@ -24,7 +24,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿGeneric\)
  OrgReg (ÿGeneric\)
- TgStat=11
+ TgStat=0
  OutDir (.\)
  OutName (Project2_lab)
  GenApp=1

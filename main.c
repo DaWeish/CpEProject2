@@ -1,9 +1,8 @@
 #include "reg932.h"
-//#include "uart.h"
+#include "uart.h"
 #include "uart.c"
 #include "note_periods.h"
 
-#define OSCFREQ 7372800
 
 #define TICK_HIGH 0xfe
 #define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
@@ -27,7 +26,8 @@ unsigned int noteTime;
 
 sbit speaker = P1^7;
 
-bit looping;
+bit looping = 0x21;
+bit playing = 0x22;
 
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
@@ -48,7 +48,6 @@ void timer1_tone(void) interrupt 3 using 3
 	
 void timer0_durr(void) interrupt 1 using 3 
 {	
-	TR1 = 0;
 
 	if (noteTime > 0) // still playing the note, reset timer
 	{
@@ -58,6 +57,8 @@ void timer0_durr(void) interrupt 1 using 3
 	}
 	else
 	{
+		currNote++;
+		
 		if (currNote >= songSize)
 		{
 			currNote = 0;
@@ -65,11 +66,8 @@ void timer0_durr(void) interrupt 1 using 3
 			{
 				TR1 = 0;
 				TR0 = 0;
+				playing = 0;
 			}
-		}
-		else
-		{
-			currNote++;
 		}
 		
 		TH0 = TICK_HIGH;
@@ -79,12 +77,11 @@ void timer0_durr(void) interrupt 1 using 3
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	}
 
-	TR1 = 1;
 	return;
 }
 
 void stopSong(); // stops both timers
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong);
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
 void keyboardMode(void);
 void delay(unsigned int count);
 void transmitText(unsigned char* text, unsigned char size);
@@ -97,7 +94,6 @@ void main()
 	P1M2 = 0x00;
 	P2M1 = 0x00;
 	P2M2 = 0x00;
-	looping = 1;
 	
 	mode = 0;
 	
@@ -172,8 +168,9 @@ void main()
 
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong )
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
 {
+	looping = loop;
 	// Set up timer and interrupts
 	TMOD = 0x11;
 	IEN0 = IEN0 | 0x8A;

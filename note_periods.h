@@ -1,6 +1,7 @@
 #ifndef NOTE_PERIODS_H
 #define NOTE_PERIODS_H
 
+
 #define E3 (65536 - 4189)
 #define Fb3 (65536 - 4189)
 #define F3 (65536 - 4189)
