@@ -48,8 +48,6 @@ void timer1_tone(void) interrupt 3 using 3
 	
 void timer0_durr(void) interrupt 1 using 3 
 {	
-	TR1 = 0;
-	TR0 = 0;
 
 	if (noteTime > 0) // still playing the note, reset timer
 	{
@@ -80,8 +78,6 @@ void timer0_durr(void) interrupt 1 using 3
 		TL1 = notes[note_ptr[currNote]] & 0x00ff;
 	}
 
-	TH0 = 1;
-	TH1 = 1;
 	return;
 }
 
@@ -107,13 +103,10 @@ void main()
 	
 //	uart_init();
 	  
-//	playSong(song1, durr1, song1Size);	    // Plays test scale
-	while (1) 
-	{
+	while (1) {
 	switch(mode)
 	{
 		case 0:
-		
 			stopSong();
 			playSong(song1, durr1, song1Size);
 
@@ -121,7 +114,7 @@ void main()
 			{
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
-				    delay(10);
+				    delay(100);
 					while (BUTTON7 == 0);
 					mode++;
 					break;
@@ -129,7 +122,6 @@ void main()
 			}
 		
 			break;
-		
 		
 		case 1:
 		{
@@ -140,7 +132,7 @@ void main()
 			{
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
-					delay(10);
+					delay(100);
 					while (BUTTON7 == 0);
 					mode++;
 					break;
@@ -155,7 +147,7 @@ void main()
 
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
-					delay(10);
+					delay(100);
 					while (BUTTON7 == 0);
 					mode++;
 					break;
