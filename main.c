@@ -3,6 +3,8 @@
 #include "uart.c"
 #include "note_periods.h"
 
+#define TRUE 1
+#define FALSE 0
 
 #define TICK_HIGH 0xfe
 #define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
@@ -62,11 +64,11 @@ void timer0_durr(void) interrupt 1 using 3
 		if (currNote >= songSize)
 		{
 			currNote = 0;
-			if (looping == 0)
+			if (looping == FALSE)
 			{
 				TR1 = 0;
 				TR0 = 0;
-				playing = 0;
+				playing = FALSE;
 			}
 		}
 		
@@ -108,18 +110,17 @@ void main()
 	switch(mode)
 	{
 		case 0:
-			stopSong();
-			playSong(song1, durr1, song1Size);
+			playSong(song1, durr1, song1Size, TRUE);
 			transmitText(song1Name, song1NameSize);
-			looping = 1;
 		
 			while(1)
 			{
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
-				    delay(100);
+				  delay(100);
 					while (BUTTON7 == 0);
 					mode++;
+					stopSong();
 					break;
 				}
 			}
@@ -128,9 +129,7 @@ void main()
 		
 		case 1:
 		{
-			stopSong();
-			playSong(key1, quarter, keySize);
-			looping = 1;
+			playSong(key1, quarter, keySize, FALSE);
 
 			while(1)
 			{
@@ -145,8 +144,6 @@ void main()
 		}
 		case 2:
 		{
-			stopSong();
-			looping = 0;
 			while(1)
 			{	
 				keyboardMode();
@@ -156,6 +153,7 @@ void main()
 					delay(100);
 					while (BUTTON7 == 0);
 					mode++;
+					stopSong();
 					break;
 				}
 			}
@@ -163,9 +161,7 @@ void main()
 		
 		case 3: //metronome mode
 			{
-			stopSong();
-			looping = 0;
-			playSong(key1, quarter, keySize);
+			playSong(key1, quarter, keySize, TRUE);
 			while(1)
 			{	
 				if (BUTTON8 == 0)//slower metronome
@@ -174,13 +170,14 @@ void main()
 				}
 				if (BUTTON9 == 0)// faster metronome
 				{
-					tempo -= 5;
+					tempo += 5;
 				}
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
 					delay(100);
 					while (BUTTON7 == 0);
 					mode++;
+					stopSong();
 					break;
 				}
 			}
@@ -232,37 +229,37 @@ void keyboardMode(void)
 	{
 		delay(100);
 		while (BUTTON1 == 0);
-		playSong(key1,quarter, keySize);//plays C4
+		playSong(key1,quarter, keySize, FALSE);//plays C4
 	}
 	if(BUTTON2 == 0)
 	{
 		delay(100);
 		while (BUTTON2 == 0);
-		playSong(key2,quarter, keySize);//plays C4
+		playSong(key2,quarter, keySize, FALSE);//plays C4
 	}
 	if(BUTTON3 == 0)
 	{
 		delay(100);
 		while (BUTTON3 == 0);
-		playSong(key3,quarter, keySize);//plays C4
+		playSong(key3,quarter, keySize, FALSE);//plays C4
 	}
 	if(BUTTON4 == 0)
 	{
 		delay(100);
 		while (BUTTON4 == 0);
-		playSong(key4,quarter, keySize);//plays C4
+		playSong(key4,quarter, keySize, FALSE);//plays C4
 	}
 	if(BUTTON5 == 0)
 	{
 		delay(100);
 		while (BUTTON5 == 0);
-		playSong(key5,quarter, keySize);//plays C4
+		playSong(key5,quarter, keySize, FALSE);//plays C4
 	}
 	if(BUTTON6 == 0)
 	{
 		delay(100);
 		while (BUTTON6 == 0);
-		playSong(key6,quarter, keySize);//plays C4
+		playSong(key6,quarter, keySize, FALSE);//plays C4
 	}
 }
 

@@ -12,6 +12,7 @@
 
 #define E3		((CLOCK/4)/164.81)
 #define F3		((CLOCK/4)/174.61)
+#define Gb3		((CLOCK/4)/185.00)
 #define G3		((CLOCK/4)/196.00)
 #define Ab3		((CLOCK/4)/207.65)
 #define A3		((CLOCK/4)/220.00)
@@ -54,6 +55,7 @@
 #define Bb6		((CLOCK/4)/1864.7)
 #define B6		((CLOCK/4)/1975.5)
 #define C7		((CLOCK/4)/2093.0)
+#define Db7   ((CLOCK/4)/2217.4)
 #define D7		((CLOCK/4)/2349.3)
 
 code unsigned int notes[] = 
