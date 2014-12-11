@@ -172,7 +172,7 @@ void main()
 		case 1:
 		{
 
-			tempo = 100;
+			tempo = 60;
 			updateTempo();
 
 			playSong(songYPC, durrYPC, songYPCSize, TRUE);
@@ -247,6 +247,24 @@ void main()
 					stopSong();
 					tempo += 5;
 					updateTempo();
+					playSong(metroTone, metDurr, metSize, TRUE);
+				}
+				if (BUTTON5 == 0)//lower pitch
+				{
+					delay(100);
+					while (BUTTON8 == 0);
+					stopSong();
+					if (metroTone[0] > 1)
+						metroTone[0]--;
+					playSong(metroTone, metDurr, metSize, TRUE);
+				}
+				if (BUTTON6 == 0)// higher pitch
+				{
+					delay(100);
+					while (BUTTON8 == 0);
+					stopSong();
+					if (metroTone[0] < 35)
+						metroTone[0]++;
 					playSong(metroTone, metDurr, metSize, TRUE);
 				}
 				if (BUTTON7 == 0)//get out if the mode button is pressed
