@@ -161,8 +161,8 @@ void main()
 		{
 			tempo = 60;
 			updateTempo();
-			playSong(song1, durr1, song1Size, TRUE);
-			transmitText(songNameDragon, songNameDragonSize);
+			playSong(songEveryNoteforce, durrEveryNoteforce, songEveryNoteSize, TRUE);
+			transmitText(songNameEveryNote, songNameEveryNoteSize);
 			LED1 = 1;
 			LED2 = 0;
 			LED3 = 1;
