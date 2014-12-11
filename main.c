@@ -24,6 +24,7 @@ sbit LED2 = P0^5;
 sbit LED3 = P2^7;
 sbit LED4 = P0^6;
 sbit LED5 = P1^6;
+sbit LED6 = P0^4;
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
@@ -125,7 +126,7 @@ void main()
 	P0M1 = 0x00;
 	P0M2 = 0x00;
 	P1M1 = 0x00;
-	P1M2 = 0x00;
+	P1M2 = 0x04;
 	P2M1 = 0x00;
 	P2M2 = 0x00;
 	
@@ -170,7 +171,7 @@ void main()
 		
 		case 1:
 		{
-			tempo = 120;
+			tempo = 60;
 			updateTempo();
 
 			playSong(songYPC, durrYPC, songYPCSize, TRUE);
@@ -259,7 +260,7 @@ void main()
 		}
 		case 4: //third song
 		{
-			tempo = 120;
+			tempo = 60;
 			updateTempo();
 			playSong(songSLMN, durrSLMN, songSLMNSize, TRUE);
 			transmitText(songNameSLMN, songNameSLMNSize);
@@ -389,6 +390,9 @@ void transmitText(unsigned char* text, unsigned char size)
 
 void externalButtonISR(void) interrupt 0 using 1
 {
-
+    LED6 = 0;
+	delay(100);
+	stopSong();
+	LED6 = 1;
 	return;
 }	   

@@ -105,7 +105,7 @@ code unsigned char songDragonSize = 16;
 code unsigned char songNameDragon[] = {"Through the Fire and Flames"};
 code unsigned char songNameDragonSize = 27;
 
-code unsigned char songYPC[] = {21,28,21,20,28,20,18,25,24};
+code unsigned char songYPC[] = {21,28,21,20,28,20,18,26,25};
 code unsigned char durrYPC[] = {16, 8, 8,16, 8, 8,32,16,16};
 code unsigned char songYPCSize = 9;
 code unsigned char songNameYPC[] = {"Your Prince Charming"};
