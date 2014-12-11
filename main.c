@@ -161,7 +161,7 @@ void main()
 		
 		case 1:
 		{
-			tempo = 120;
+			tempo = 100;
 			updateTempo();
 			playSong(songYPCforce, durrYPCforce, songYPCSize, TRUE);
 			transmitText(songNameYPC, songNameYPCSize);
