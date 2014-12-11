@@ -17,6 +17,8 @@ sbit BUTTON7 = P2^1;
 sbit BUTTON8 = P0^3;
 sbit BUTTON9 = P2^2;
 
+unsigned char ourNames[] = {"Connor, James, Jake"};
+
 sbit LED1 = P2^4;
 sbit LED2 = P0^5;
 sbit LED3 = P2^7;
@@ -30,6 +32,7 @@ unsigned int note_durr_factor;
 unsigned int noteTime;
 
 sbit speaker = P1^7;
+sbit speaker2 = P0^4;
 
 unsigned char looping;
 unsigned char playing;
@@ -47,6 +50,8 @@ unsigned char mode;
 	
 unsigned char TRUE = 1;
 unsigned char FALSE = 0;
+
+unsigned char currFreq;
 
 void timer1_tone(void) interrupt 3 using 3
 {
@@ -109,8 +114,10 @@ void timer0_durr(void) interrupt 1 using 3
 void stopSong(); // stops both timers
 void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, unsigned char loop);
 void keyboardMode(void);
-void delay(unsigned int count);
 void transmitText(unsigned char* text, unsigned char size);
+void delay(unsigned int count);
+
+
 void updateTempo(); // call after changing tempo
 
 void main()
@@ -130,6 +137,8 @@ void main()
 	//initialize UART
 	uart_init();
 	EA = 1;
+	EX0 = 1;
+	TCON = TCON | 0x01;
 
 	while (1) {
 	switch(mode)
@@ -163,8 +172,10 @@ void main()
 		{
 			tempo = 100;
 			updateTempo();
-			playSong(songYPCforce, durrYPCforce, songYPCSize, TRUE);
+
+			playSong(songYPC, durrYPC, songYPCSize, TRUE);
 			transmitText(songNameYPC, songNameYPCSize);
+
 			LED1 = 1;
 			LED2 = 0;
 			LED3 = 1;
@@ -185,6 +196,7 @@ void main()
 		}
 		case 2:
 		{
+			transmitText(keyboardName, keyboardNameSize);
 			while(1)
 			{	
 				keyboardMode();
@@ -209,6 +221,7 @@ void main()
 			tempo = 60;
 			updateTempo();
 			playSong(metroTone, metDurr, metSize, TRUE);
+			transmitText(metName, metNameSize);
 			LED1 = 1;
 			LED2 = 1;
 			LED3 = 1;
@@ -248,7 +261,7 @@ void main()
 		{
 			tempo = 120;
 			updateTempo();
-			playSong(songSLMNforce, durrSLMNforce, songSLMNSize, SLMN);
+			playSong(songSLMN, durrSLMN, songSLMNSize, TRUE);
 			transmitText(songNameSLMN, songNameSLMNSize);
 			LED1 = 1;
 			LED2 = 1;
@@ -373,3 +386,9 @@ void transmitText(unsigned char* text, unsigned char size)
 		uart_transmit(text[i]);
 	}
 }
+
+void externalButtonISR(void) interrupt 0 using 1
+{
+
+	return;
+}	   
