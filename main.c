@@ -23,6 +23,7 @@ sbit LED1 = P2^4;
 sbit LED2 = P0^5;
 sbit LED3 = P2^7;
 sbit LED4 = P0^6;
+sbit LED5 = P1^6;
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
@@ -151,6 +152,7 @@ void main()
 			LED2 = 1;
 			LED3 = 1;
 			LED4 = 1;
+			LED5 = 1;
 		
 			while(1)
 			{
@@ -168,14 +170,17 @@ void main()
 		
 		case 1:
 		{
-			tempo = 60;
+			tempo = 120;
 			updateTempo();
-			playSong(songEveryNote, durrEveryNote, songEveryNoteSize, TRUE);
-			transmitText(songNameEveryNote, songNameEveryNoteSize);
+
+			playSong(songYPC, durrYPC, songYPCSize, TRUE);
+			transmitText(songNameYPC, songNameYPCSize);
+
 			LED1 = 1;
 			LED2 = 0;
 			LED3 = 1;
 			LED4 = 1;
+			LED5 = 1;
 
 			while(1)
 			{
@@ -221,6 +226,7 @@ void main()
 			LED2 = 1;
 			LED3 = 1;
 			LED4 = 0;
+			LED5 = 1;
 			while(1)
 			{	
 				if (BUTTON8 == 0)//slower metronome
@@ -251,7 +257,30 @@ void main()
 				}
 			}
 		}
-			
+		case 4: //third song
+		{
+			tempo = 120;
+			updateTempo();
+			playSong(songSLMN, durrSLMN, songSLMNSize, TRUE);
+			transmitText(songNameSLMN, songNameSLMNSize);
+			LED1 = 1;
+			LED2 = 1;
+			LED3 = 1;
+			LED4 = 1;
+			LED5 = 0;
+
+			while(1)
+			{
+				if (BUTTON7 == 0)//get out if the mode button is pressed
+				{
+					delay(100);
+					while (BUTTON7 == 0);
+					mode++;
+					stopSong();
+					break;
+				}
+			}
+		}
 		default:
 			mode = 0;
 	}
