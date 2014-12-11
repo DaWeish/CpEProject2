@@ -3,9 +3,6 @@
 #include "uart.c"
 #include "note_periods.h"
 
-#define TRUE 0x01
-#define FALSE 0x00
-
 #define TICK_HIGH 0xfe
 #define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
 
@@ -33,8 +30,8 @@ unsigned int noteTime;
 
 sbit speaker = P1^7;
 
-bit looping = 0x21;
-bit playing = 0x22;
+unsigned char looping;
+unsigned char playing;
 
 unsigned char* note_ptr;
 unsigned char* durr_ptr;
@@ -47,6 +44,9 @@ unsigned char noteLow;
 
 unsigned char mode;
 	
+unsigned char TRUE = 1;
+unsigned char FALSE = 0;
+
 void timer1_tone(void) interrupt 3 using 3
 {
 	TH1 = noteHigh;
@@ -74,8 +74,6 @@ void timer0_durr(void) interrupt 1 using 3
 			currNote = 0;
 			if (looping == FALSE)
 			{
-				TR1 = 0;
-				TR0 = 0;
 				playing = FALSE;
 			}
 		}
@@ -96,13 +94,19 @@ void timer0_durr(void) interrupt 1 using 3
 		{
 			TR1 = 1;
 		}
+
+		if (playing == FALSE)
+		{
+			TR1 = 0;
+			TR0 = 0;
+		}
 	}
 
 	return;
 }
 
 void stopSong(); // stops both timers
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop);
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, unsigned char loop);
 void keyboardMode(void);
 void delay(unsigned int count);
 void transmitText(unsigned char* text, unsigned char size);
@@ -130,7 +134,7 @@ void main()
 	switch(mode)
 	{
 		case 0:
-			tempo = 40;
+			tempo = 120;
 			updateTempo();
 			playSong(songDragonforce, durrDragonforce, songDragonSize, TRUE);
 			transmitText(songNameDragon, songNameDragonSize);
@@ -155,7 +159,10 @@ void main()
 		
 		case 1:
 		{
-			playSong(key1, quarter, keySize, FALSE);
+			tempo = 60;
+			updateTempo();
+			playSong(song1, durr1, song1Size, TRUE);
+			transmitText(songNameDragon, songNameDragonSize);
 			LED1 = 1;
 			LED2 = 0;
 			LED3 = 1;
@@ -168,6 +175,7 @@ void main()
 					delay(100);
 					while (BUTTON7 == 0);
 					mode++;
+					stopSong();
 					break;
 				}
 			}
@@ -195,7 +203,7 @@ void main()
 		
 		case 3: //metronome mode
 			{
-			playSong(key1, quarter, keySize, TRUE);
+			playSong(metroTone, metDurr, metSize, TRUE);
 			LED1 = 1;
 			LED2 = 1;
 			LED3 = 1;
@@ -230,9 +238,10 @@ void main()
 
 }
 
-void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, bit loop)
+void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong, unsigned char loop)
 {
 	looping = loop;
+	playing = TRUE;
 	// Set up timers and interrupts
 	TMOD = 0x11;
 	IEN0 = IEN0 | 0x8A;
@@ -285,37 +294,37 @@ void keyboardMode(void)
 	{
 		delay(100);
 		while (BUTTON1 == 0);
-		playSong(key1,quarter, keySize, FALSE);//plays C4
+		playSong(key1,quarterNote, keySize, FALSE);//plays C4
 	}
 	if(BUTTON2 == 0)
 	{
 		delay(100);
 		while (BUTTON2 == 0);
-		playSong(key2,quarter, keySize, FALSE);//plays C4
+		playSong(key2,quarterNote, keySize, FALSE);//plays C4
 	}
 	if(BUTTON3 == 0)
 	{
 		delay(100);
 		while (BUTTON3 == 0);
-		playSong(key3,quarter, keySize, FALSE);//plays C4
+		playSong(key3,quarterNote, keySize, FALSE);//plays C4
 	}
 	if(BUTTON4 == 0)
 	{
 		delay(100);
 		while (BUTTON4 == 0);
-		playSong(key4,quarter, keySize, FALSE);//plays C4
+		playSong(key4,quarterNote, keySize, FALSE);//plays C4
 	}
 	if(BUTTON5 == 0)
 	{
 		delay(100);
 		while (BUTTON5 == 0);
-		playSong(key5,quarter, keySize, FALSE);//plays C4
+		playSong(key5,quarterNote, keySize, FALSE);//plays C4
 	}
 	if(BUTTON6 == 0)
 	{
 		delay(100);
 		while (BUTTON6 == 0);
-		playSong(key6,quarter, keySize, FALSE);//plays C4
+		playSong(key6,quarterNote, keySize, FALSE);//plays C4
 	}
 }
 
