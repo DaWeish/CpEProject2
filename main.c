@@ -3,8 +3,8 @@
 #include "uart.c"
 #include "note_periods.h"
 
-#define TRUE 1
-#define FALSE 0
+#define TRUE 0x01
+#define FALSE 0x00
 
 #define TICK_HIGH 0xfe
 #define TICK_LOW 0x8f //These are calculated to give a 0.0001s period for the timer
@@ -19,6 +19,11 @@ sbit BUTTON6 = P0^0;
 sbit BUTTON7 = P2^1;
 sbit BUTTON8 = P0^3;
 sbit BUTTON9 = P2^2;
+
+sbit LED1 = P2^4;
+sbit LED2 = P0^5;
+sbit LED3 = P2^7;
+sbit LED4 = P0^6;
 
 // Tempo is beats per minute
 // Note duration is specified in 32nd notes
@@ -37,12 +42,15 @@ unsigned char* durr_ptr;
 unsigned char songSize;
 unsigned char currNote;
 
+unsigned char noteHigh;
+unsigned char noteLow;
+
 unsigned char mode;
 	
 void timer1_tone(void) interrupt 3 using 3
 {
-	TH1 = notes[note_ptr[currNote]] >> 8;
-	TL1 = notes[note_ptr[currNote]] & 0x00ff;
+	TH1 = noteHigh;
+	TL1 = noteLow;
 	speaker = ~speaker;
 
 	return;
@@ -75,8 +83,10 @@ void timer0_durr(void) interrupt 1 using 3
 		TH0 = TICK_HIGH;
 		TL0 = TICK_LOW;
 		noteTime = note_durr_factor * durr_ptr[currNote];
-		TH1 = notes[note_ptr[currNote]] >> 8;
-		TL1 = notes[note_ptr[currNote]] & 0x00ff;
+		noteHigh = notes[note_ptr[currNote]] >> 8;
+		noteLow = notes[note_ptr[currNote]] & 0x00ff;
+		TH1 = noteHigh;
+		TL1 = noteLow;
 		
 		if (notes[note_ptr[currNote]] == 0)
 		{
@@ -120,8 +130,14 @@ void main()
 	switch(mode)
 	{
 		case 0:
-			playSong(song1, durr1, song1Size, TRUE);
-			transmitText(song1Name, song1NameSize);
+			tempo = 40;
+			updateTempo();
+			playSong(songDragonforce, durrDragonforce, songDragonSize, TRUE);
+			transmitText(songNameDragon, songNameDragonSize);
+			LED1 = 0;
+			LED2 = 1;
+			LED3 = 1;
+			LED4 = 1;
 		
 			while(1)
 			{
@@ -140,6 +156,10 @@ void main()
 		case 1:
 		{
 			playSong(key1, quarter, keySize, FALSE);
+			LED1 = 1;
+			LED2 = 0;
+			LED3 = 1;
+			LED4 = 1;
 
 			while(1)
 			{
@@ -157,6 +177,10 @@ void main()
 			while(1)
 			{	
 				keyboardMode();
+				LED1 = 1;
+				LED2 = 1;
+				LED3 = 0;
+				LED4 = 1;
 
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
@@ -172,6 +196,10 @@ void main()
 		case 3: //metronome mode
 			{
 			playSong(key1, quarter, keySize, TRUE);
+			LED1 = 1;
+			LED2 = 1;
+			LED3 = 1;
+			LED4 = 0;
 			while(1)
 			{	
 				if (BUTTON8 == 0)//slower metronome
@@ -216,8 +244,10 @@ void playSong(unsigned char* song, unsigned char* durr, unsigned char sizeOfSong
 	TH0 = TICK_HIGH;
 	TL0 = TICK_LOW;
 	noteTime = note_durr_factor * durr_ptr[currNote];
-	TH1 = notes[note_ptr[currNote]] >> 8;
-	TL1 = notes[note_ptr[currNote]] & 0x00ff;
+	noteHigh = notes[note_ptr[currNote]] >> 8;
+	noteLow = notes[note_ptr[currNote]] & 0x00ff;
+	TH1 = noteHigh;
+	TL1 = noteLow;
 	
 	TR0 = 1;
 //TR1 = 1;

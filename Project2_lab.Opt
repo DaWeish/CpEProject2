@@ -7,28 +7,22 @@
  lExt (*.lib)
  tExt (*.txt)
  pExt (*.plm)
- CppX (*.cpp)
  DaveTm { 0,0,0,0,0,0,0,0 }
 
 Target (Target 1), 0x0000 // Tools: 'MCS-51'
 GRPOPT 1,(Source),1,0,0
 
-OPTFFF 1,1,1,33554433,0,46,50,0,<.\main.c><main.c> { 44,0,0,0,0,0,0,0,1,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,226,255,255,255,8,0,0,0,4,0,0,0,59,4,0,0,71,2,0,0 }
+OPTFFF 1,1,1,1,0,119,133,0,<.\main.c><main.c> { 44,0,0,0,0,0,0,0,1,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,226,255,255,255,8,0,0,0,4,0,0,0,59,4,0,0,71,2,0,0 }
 
-ExtF <C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\reg932.h> 1,1,0,{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
-ExtF <C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\uart.h> 1,1,0,{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
-ExtF <C:\Users\Connore\Documents\Rolla\Fall 2014\CpE 213\CpEProject2\note_periods.h> 12,9,0,{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
 
 TARGOPT 1, (Target 1)
  CLK51=12000000
   OPTTT 1,1,1,0
   OPTHX 0,65535,0,0,0
   OPTLX 120,65,8,<.\>
-  OPTOX 16
-  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0
   OPTXL 1,1,1,1,1,1,1,0,0
   OPTFL 1,0,1
-  OPTAX 0
   OPTBL 0,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
   OPTBL 1,(MCS 51 Instruction Set)<DATASHTS\INTEL\ISM51.PDF>
   OPTDL (S8051.DLL)()(DP51.DLL)(-p51)(S8051.DLL)()(TP51.DLL)(-p51)

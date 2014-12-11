@@ -1,7 +1,7 @@
 #ifndef NOTE_PERIODS_H
 #define NOTE_PERIODS_H
 
-#define CLOCK	7372800
+#define CLOCK	11059200
 
 //note length
 #define sixteenth 2
@@ -10,53 +10,53 @@
 #define half 16
 #define whole 32
 
-#define E3		((CLOCK/4)/164.81)
-#define F3		((CLOCK/4)/174.61)
-#define Gb3		((CLOCK/4)/185.00)
-#define G3		((CLOCK/4)/196.00)
-#define Ab3		((CLOCK/4)/207.65)
-#define A3		((CLOCK/4)/220.00)
-#define Bb3		((CLOCK/4)/233.08)
-#define B3		((CLOCK/4)/246.94)
-#define C4		((CLOCK/4)/261.63)
-#define Db4		((CLOCK/4)/277.18)
-#define D4		((CLOCK/4)/293.67)
-#define Eb4		((CLOCK/4)/311.13)
-#define E4		((CLOCK/4)/329.63)
-#define F4		((CLOCK/4)/349.23)
-#define Gb4		((CLOCK/4)/369.99)
-#define G4		((CLOCK/4)/392.00)
-#define Ab4		((CLOCK/4)/415.30)
-#define A4		((CLOCK/4)/440.00)
-#define Bb4		((CLOCK/4)/466.16)
-#define B4		((CLOCK/4)/493.88)
-#define C5		((CLOCK/4)/523.25)
-#define Db5		((CLOCK/4)/554.37)
-#define D5		((CLOCK/4)/587.33)
-#define Eb5		((CLOCK/4)/622.25)
-#define E5		((CLOCK/4)/659.26)
-#define F5		((CLOCK/4)/698.46)
-#define Gb5		((CLOCK/4)/739.99)
-#define G5		((CLOCK/4)/783.99)
-#define Ab5		((CLOCK/4)/830.61)
-#define A5		((CLOCK/4)/880.00)
-#define Bb5		((CLOCK/4)/932.33)
-#define B5		((CLOCK/4)/987.77)
-#define C6		((CLOCK/4)/1046.5)
-#define Db6		((CLOCK/4)/1108.7)
-#define D6		((CLOCK/4)/1174.7)
-#define Eb6		((CLOCK/4)/1244.5)
-#define E6		((CLOCK/4)/1318.5)
-#define F6		((CLOCK/4)/1396.9)
-#define Gb6		((CLOCK/4)/1480.0)
-#define G6		((CLOCK/4)/1568.0)
-#define Ab6		((CLOCK/4)/1661.2)
-#define A6		((CLOCK/4)/1760.0)
-#define Bb6		((CLOCK/4)/1864.7)
-#define B6		((CLOCK/4)/1975.5)
-#define C7		((CLOCK/4)/2093.0)
-#define Db7   ((CLOCK/4)/2217.4)
-#define D7		((CLOCK/4)/2349.3)
+#define E3		(65536 - ((CLOCK/24)/164.81))
+#define F3		(65536 - ((CLOCK/24)/174.61))
+#define Gb3		(65536 - ((CLOCK/24)/185.00))
+#define G3		(65536 - ((CLOCK/24)/196.00))
+#define Ab3		(65536 - ((CLOCK/24)/207.65))
+#define A3		(65536 - ((CLOCK/24)/220.00))
+#define Bb3		(65536 - ((CLOCK/24)/233.08))
+#define B3		(65536 - ((CLOCK/24)/246.94))
+#define C4		(65536 - ((CLOCK/24)/261.63))
+#define Db4		(65536 - ((CLOCK/24)/277.18))
+#define D4		(65536 - ((CLOCK/24)/293.67))
+#define Eb4		(65536 - ((CLOCK/24)/311.13))
+#define E4		(65536 - ((CLOCK/24)/329.63))
+#define F4		(65536 - ((CLOCK/24)/349.23))
+#define Gb4		(65536 - ((CLOCK/24)/369.99))
+#define G4		(65536 - ((CLOCK/24)/392.00))
+#define Ab4		(65536 - ((CLOCK/24)/415.30))
+#define A4		(65536 - ((CLOCK/24)/440.00))
+#define Bb4		(65536 - ((CLOCK/24)/466.16))
+#define B4		(65536 - ((CLOCK/24)/493.88))
+#define C5		(65536 - ((CLOCK/24)/523.25))
+#define Db5		(65536 - ((CLOCK/24)/554.37))
+#define D5		(65536 - ((CLOCK/24)/587.33))
+#define Eb5		(65536 - ((CLOCK/24)/622.25))
+#define E5		(65536 - ((CLOCK/24)/659.26))
+#define F5		(65536 - ((CLOCK/24)/698.46))
+#define Gb5		(65536 - ((CLOCK/24)/739.99))
+#define G5		(65536 - ((CLOCK/24)/783.99))
+#define Ab5		(65536 - ((CLOCK/24)/830.61))
+#define A5		(65536 - ((CLOCK/24)/880.00))
+#define Bb5		(65536 - ((CLOCK/24)/932.33))
+#define B5		(65536 - ((CLOCK/24)/987.77))
+#define C6		(65536 - ((CLOCK/24)/1046.5))
+#define Db6		(65536 - ((CLOCK/24)/1108.7))
+#define D6		(65536 - ((CLOCK/24)/1174.7))
+#define Eb6		(65536 - ((CLOCK/24)/1244.5))
+#define E6		(65536 - ((CLOCK/24)/1318.5))
+#define F6		(65536 - ((CLOCK/24)/1396.9))
+#define Gb6		(65536 - ((CLOCK/24)/1480.0))
+#define G6		(65536 - ((CLOCK/24)/1568.0))
+#define Ab6		(65536 - ((CLOCK/24)/1661.2))
+#define A6		(65536 - ((CLOCK/24)/1760.0))
+#define Bb6		(65536 - ((CLOCK/24)/1864.7))
+#define B6		(65536 - ((CLOCK/24)/1975.5))
+#define C7		(65536 - ((CLOCK/24)/2093.0))
+#define Db7     (65536 - ((CLOCK/24)/2217.4))
+#define D7		(65536 - ((CLOCK/24)/2349.3))
 
 code unsigned int notes[] = 
 //							 1  2   3  4   5  6   7  8
@@ -76,7 +76,7 @@ code unsigned int notes[] =
 
 
 //only relevant for the keyboard function
-code unsigned char key1[] = {8};//C4
+code unsigned char key1[] = {18};//C4
 code unsigned char key2[] = {10};//D4
 code unsigned char key3[] = {12};//E4
 code unsigned char key4[] = {13};//F4
@@ -86,10 +86,14 @@ code unsigned char keySize = 1;
 
 code unsigned char song1[] = {8,10,12,15};
 code unsigned char durr1[] = {32,32,64,32};
-code unsigned char songDragonforce[] = {21,23,24,21,23,24,26,23, 29,26,28,25,26,24,25,20};
-code unsigned char durrDragonforce[] = { 4, 4, 4, 4, 4, 4, 4, 4,  4, 4, 4, 4, 4, 4, 4, 4,};
 code unsigned char song1Size = 4;
 code unsigned char song1Name[] = {"Scale"};
 code unsigned char song1NameSize = 5;
+
+code unsigned char songDragonforce[] = {21,23,24,21,23,24,26,23, 29,26,28,25,26,24,25,20};
+code unsigned char durrDragonforce[] = { 4, 4, 4, 4, 4, 4, 4, 4,  4, 4, 4, 4, 4, 4, 4, 4,};
+code unsigned char songDragonSize = 16;
+code unsigned char songNameDragon[] = {"Through the Fire and Flames"};
+code unsigned char songNameDragonSize = 27;
 
 #endif
