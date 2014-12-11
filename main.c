@@ -203,6 +203,8 @@ void main()
 		
 		case 3: //metronome mode
 			{
+			tempo = 60;
+			updateTempo();
 			playSong(metroTone, metDurr, metSize, TRUE);
 			LED1 = 1;
 			LED2 = 1;
@@ -212,13 +214,21 @@ void main()
 			{	
 				if (BUTTON8 == 0)//slower metronome
 				{
+					delay(100);
+					while (BUTTON8 == 0);
+					stopSong();
 					tempo -= 5; 
 					updateTempo();
+					playSong(metroTone, metDurr, metSize, TRUE);
 				}
 				if (BUTTON9 == 0)// faster metronome
 				{
+					delay(100);
+					while (BUTTON9 == 0);
+					stopSong();
 					tempo += 5;
 					updateTempo();
+					playSong(metroTone, metDurr, metSize, TRUE);
 				}
 				if (BUTTON7 == 0)//get out if the mode button is pressed
 				{
