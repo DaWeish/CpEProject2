@@ -73,7 +73,7 @@ code unsigned int notes[] =
 		
 //45  46 47
 	C7,Db7,D7};
-
+	
 
 //only relevant for the keyboard function
 code unsigned char key1[] = {8};//C4
@@ -102,10 +102,12 @@ code unsigned char songDragonSize = 16;
 code unsigned char songNameDragon[] = {"Through the Fire and Flames"};
 code unsigned char songNameDragonSize = 27;
 
-code unsigned char songEveryNote[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47};
-code unsigned char durrEveryNote[] = {4,4,4,4,4,4,4,4,4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-code unsigned char songEveryNoteSize[] = 47;
-code unsigned char songNameEveryNote[] = {"Every Note"};
-code unsigned char songNameEveryNoteSize = 10;
+code unsigned char songYPC[] = {21,28,21,20,28,20,18,25,24}
+code unsigned char durrYPC[] = {16, 8, 8,16, 8, 8,32,16,16};
+code unsigned char songYPCSize[] = 47;
+code unsigned char songNameYPC[] = {"Your Prince Charming"};
+code unsigned char songYPCSize = 20;
+
+
 
 #endif

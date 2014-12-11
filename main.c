@@ -159,10 +159,10 @@ void main()
 		
 		case 1:
 		{
-			tempo = 60;
+			tempo = 120;
 			updateTempo();
-			playSong(songEveryNoteforce, durrEveryNoteforce, songEveryNoteSize, TRUE);
-			transmitText(songNameEveryNote, songNameEveryNoteSize);
+			playSong(songYPCforce, durrYPCforce, songYPCSize, TRUE);
+			transmitText(songNameYPC, songNameYPCSize);
 			LED1 = 1;
 			LED2 = 0;
 			LED3 = 1;
