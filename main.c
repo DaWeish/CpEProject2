@@ -171,7 +171,8 @@ void main()
 		
 		case 1:
 		{
-			tempo = 60;
+
+			tempo = 100;
 			updateTempo();
 
 			playSong(songYPC, durrYPC, songYPCSize, TRUE);
